@@ -1,0 +1,2865 @@
+<main>
+  <div class="main-container">
+    <div class="tab-container-main">
+      <mat-tab-group (selectedTabChange)="tabChange($event)">
+        <mat-tab label="Data Prepation">
+          <div class="col-md-12 mt-2">
+            <mat-card>
+              <h3>Upload Files</h3>
+              <div class="clearfix"></div>
+              <div class="col-md-4">
+                <div class="col-6">
+                  <p class="font-size15">Employee Data</p>
+                </div>
+                <div class="col-6">
+                  <form [formGroup]="uploadEmpDataForm">
+                    <div class="upload" (click)="uploadEmpDataFile.click()">
+                      <img src="assets/images/upload.png" />
+                      <input
+                        hidden
+                        type="file"
+                        id="uploadEmpDataFile"
+                        (change)="onUploadEmpDataFileChange($event)"
+                        #uploadEmpDataFile
+                        formControlName="uploadEmpDataFile"
+                      />
+                      Upload
+                    </div>
+                  </form>
+                  <div class="clearfix"></div>
+                  <p class="upload-close" *ngIf="uploadEmpDataFileName">
+                    {{ uploadEmpDataFileName }} <span>X</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="col-6">
+                  <p class="font-size15">Performance Data</p>
+                </div>
+                <div class="col-6">
+                  <form [formGroup]="uploadEmpTestPerformDataForm">
+                    <div
+                      class="upload"
+                      (click)="uploadEmpTestPerformDataFile.click()"
+                    >
+                      <img src="assets/images/upload.png" />
+                      <input
+                        hidden
+                        type="file"
+                        id="uploadEmpTestPerformDataFile"
+                        (change)="onUploadEmpTestPerformDataFileChange($event)"
+                        #uploadEmpTestPerformDataFile
+                        formControlName="uploadEmpTestPerformDataFile"
+                      />
+                      Upload
+                    </div>
+                  </form>
+                  <div class="clearfix"></div>
+                  <p class="upload-close" *ngIf="uploadPerformenceDataFileName">
+                    {{ uploadPerformenceDataFileName }} <span>X</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="col-6">
+                  <p class="font-size15">CTC Data</p>
+                </div>
+                <div class="col-6">
+                  <form [formGroup]="uploadEmpCtcDataForm">
+                    <div class="upload" (click)="uploadEmpCtcDataFile.click()">
+                      <img src="assets/images/upload.png" />
+                      <input
+                        hidden
+                        type="file"
+                        id="uploadEmpCtcDataFile"
+                        (change)="onUploadEmpCtcDataFileChange($event)"
+                        #uploadEmpCtcDataFile
+                        formControlName="uploadEmpCtcDataFile"
+                      />
+                      Upload
+                    </div>
+                  </form>
+                  <!-- <div class="upload" (click)="fileInput.click()">
+                    <img src="assets/images/upload.png" />
+                    Upload
+                  </div>
+                  <input
+                    hidden
+                    type="file"
+                    id="excel-upload"
+                    accept=".xlsx"
+                    multiple="false"
+                    #fileInput
+                    (change)="inputCtcExcelOnChange($event)"
+                  /> -->
+                  <div class="clearfix"></div>
+                  <p class="upload-close" *ngIf="uploadCtcDataFileName">
+                    {{ uploadCtcDataFileName }} <span>X</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="col-6">
+                  <p class="font-size15">Bonus Data</p>
+                </div>
+                <div class="col-6">
+                  <form [formGroup]="uploadEmpBonusDataForm">
+                    <div
+                      class="upload"
+                      (click)="uploadEmpBonusDataFile.click()"
+                    >
+                      <img src="assets/images/upload.png" />
+                      <input
+                        hidden
+                        type="file"
+                        id="uploadEmpBonusDataFile"
+                        (change)="onUploadEmpBonusDataFileChange($event)"
+                        #uploadEmpBonusDataFile
+                        formControlName="uploadEmpBonusDataFile"
+                      />
+                      Upload
+                    </div>
+                  </form>
+                  <div class="clearfix"></div>
+                  <p class="upload-close" *ngIf="uploadBonusDataFileName">
+                    {{ uploadBonusDataFileName }} <span>X</span>
+                  </p>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </mat-card>
+          </div>
+          <div class="col-md-6 mt-2 mb-0">
+            <mat-card *ngIf="ptype == 'premium' || ptype == 'enterprise'">
+              <h3>Uploaded files Summary Data</h3>
+              <div class="table-container">
+                <table
+                  mat-table
+                  [dataSource]="UploadDataSummery"
+                  class="mat-elevation-z8"
+                >
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="datasummery">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span>Data Summary List</span>
+                    </th>
+                    <td class="text-left" mat-cell *matCellDef="let element">
+                      {{ element.datasummery }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="data">
+                    <th mat-header-cell *matHeaderCellDef><span>Data</span></th>
+                    <td class="text-left" mat-cell *matCellDef="let element">
+                      {{ element.data }}
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                  ></tr>
+                </table>
+              </div>
+            </mat-card>
+          </div>
+          <div
+            class="col-md-6 mt-2 mb-0"
+            *ngIf="ptype == 'premium' || ptype == 'enterprise'"
+          >
+            <mat-card class="table-height">
+              <h3></h3>
+              <div class="table-container">
+                <table
+                  mat-table
+                  [dataSource]="DeviationData"
+                  class="mat-elevation-z8"
+                >
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="Deviationlist">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span>Deviation List</span>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.Deviationlist }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="Deviationdata">
+                    <th mat-header-cell *matHeaderCellDef><span>Data</span></th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.Deviationdata }}
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns2"
+                  ></tr>
+                </table>
+              </div>
+            </mat-card>
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-md-12 mt-2 mb-0">
+            <mat-card>
+              <h3>Previously Uploaded Files (Last One Year)</h3>
+              <div class="table-container">
+                <table
+                  mat-table
+                  [dataSource]="LastOneYearDataSource"
+                  class="mat-elevation-z8"
+                >
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="fileName">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>File Name</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.fileName }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Timestamp Column -->
+                  <ng-container matColumnDef="creationDate">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Uploaded Timemstamp</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.creationDate }}
+                    </td>
+                  </ng-container>
+
+                  <!-- File Size Column -->
+                  <ng-container class="text-center" matColumnDef="fileSizeInKb">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span>File Size</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.fileSizeInKb }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="action">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Actions</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      <a
+                        style="padding: 10px 5px;"
+                        href="{{ element.downloadpath }}"
+                        download
+                        target="_blank"
+                        ><i class="material-icons"
+                          ><img src="assets/images/down.png" /> </i
+                      ></a>
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="showDetails(element.id, element)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/eyes.png" /> </i
+                      ></a>
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="deletePreviousUploadedFiles(element.id)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/del.png" /> </i
+                      ></a>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="PreviousLastOneYearDisplayedColumns"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: PreviousLastOneYearDisplayedColumns
+                    "
+                  ></tr>
+                </table>
+              </div>
+            </mat-card>
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-md-12 mt-2 mb-0">
+            <div *ngIf="showFileDetailTable">
+              <mat-card>
+                <h3>Data as Uploaded In Filename {{ viewDetailFileName }}</h3>
+                <div class="table-container">
+                  <table
+                    mat-table
+                    [dataSource]="uploadDataEmloyeeListDataSource"
+                    class="mat-elevation-z8"
+                    matSort
+                  >
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="employeecode">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Employee<br />Code</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.employeecode }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="employeename">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Employee<br />Name</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.employeename }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="businessunit">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Business<br />Unit</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.businessunit }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="department">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Department</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.department }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="dateofjoining">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span
+                          >Date Of <br />
+                          Joining</span
+                        >
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.dateofjoining }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="totalworkingexperience">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Total working<br />experinece<br />(years)</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.totalworkingexperience }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="currentsalary">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Current<br />Salary<br />(INR)</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.currentsalary }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="rating">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Rating</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.rating }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="tenureingrade_1">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Tenure in<br />grade<br />(years)</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.tenureingrade_1 }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="tenureingrade_2">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span>Tenure in<br />grade<br />(years)</span>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.tenureingrade_2 }}
+                      </td>
+                    </ng-container>
+
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="uploadDataEmloyeeListDisplayedColumns"
+                    ></tr>
+                    <tr
+                      mat-row
+                      *matRowDef="
+                        let row;
+                        columns: uploadDataEmloyeeListDisplayedColumns
+                      "
+                    ></tr>
+                  </table>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Plan & Eligibility Settings">
+          <div class="col-md-12">
+            <mat-card class="mt-2 mb-0">
+              <h3>Plan Creation</h3>
+              <div class="col-md-12 ">
+                <div class="col-md-5">
+                  <p class="font-size15">Copy Properties Form Existing Plan</p>
+                </div>
+                <div class="col-md-6 ">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Select</mat-label>
+                    <mat-select
+                      matNativeControl
+                      (selectionChange)="copyPlanChange($event)"
+                    >
+                      <mat-option
+                        *ngFor="let item of planlistDataSource.data"
+                        [value]="item"
+                        >{{ item.planName }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <form [formGroup]="planCreationRulesForm">
+                <div class="col-md-12 ">
+                  <div class="col-md-5 ">
+                    <p class="font-size15">Process applicable</p>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <mat-label>Select</mat-label>
+                      <mat-select
+                        matNativeControl
+                        formControlName="processApplicable"
+                      >
+                        <mat-option value="Merit Increase"
+                          >Merit Increase</mat-option
+                        >
+                        <mat-option value="Promotion">Promotion</mat-option>
+                        <mat-option value="Bonus">Bonus</mat-option>
+                      </mat-select>
+                      <mat-error
+                        *ngIf="
+                          planCreationRulesForm.controls.processApplicable
+                            .errors?.required
+                        "
+                        >Process applicable is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="col-md-6 ">
+                  <div class="col-md-6">
+                    <p class="font-size15">Plan Name</p>
+                  </div>
+                  <div class="col-md-6 ">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <input
+                        matInput
+                        placeholder=""
+                        formControlName="planName"
+                      />
+                      <mat-error
+                        *ngIf="
+                          planCreationRulesForm.controls.planName.errors
+                            ?.required
+                        "
+                        >Planame is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="col-md-6 ">
+                  <div class="col-md-4">
+                    <p>Plan Period</p>
+                  </div>
+                  <div class="col-md-8 m-0 date-picker-p">
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 45%; float: left;"
+                    >
+                      <input
+                        matInput
+                        [matDatepicker]="picker1"
+                        formControlName="planPeriodFrom"
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker1"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                      <mat-error
+                        *ngIf="
+                          planCreationRulesForm.controls.planPeriodFrom.errors
+                            ?.required
+                        "
+                        >Plan Period Form is required</mat-error
+                      >
+                    </mat-form-field>
+
+                    <span style="float: left; width: 2%;padding: 15px 10px;"
+                      >-</span
+                    >
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 45%; float: left;"
+                    >
+                      <input
+                        matInput
+                        [matDatepicker]="picker2"
+                        formControlName="planPeriodTo"
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker2"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                      <mat-error
+                        *ngIf="
+                          planCreationRulesForm.controls.planPeriodTo.errors
+                            ?.required
+                        "
+                        >Plan period to is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6 ">
+                  <div class="col-md-5">
+                    <p>Aplicable Calender</p>
+                  </div>
+                  <div class="col-md-7 m-0 date-picker-p">
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 45%; float: left;"
+                    >
+                      <input
+                        matInput
+                        [matDatepicker]="picker3"
+                        formControlName="applicableCalenderFrom"
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker3"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                      <mat-error
+                        *ngIf="
+                          planCreationRulesForm.controls.applicableCalenderFrom
+                            .errors?.required
+                        "
+                        >Applicable Calender Form is required</mat-error
+                      >
+                    </mat-form-field>
+
+                    <span style="float: left; width: 2%;padding: 15px 10px;"
+                      >-</span
+                    >
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 47%; float: left;"
+                    >
+                      <input
+                        matInput
+                        [matDatepicker]="matApplicableCalenderTo"
+                        formControlName="applicableCalenderTo"
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="matApplicableCalenderTo"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #matApplicableCalenderTo></mat-datepicker>
+                      <!-- <mat-error *ngIf="applicableCalenderTo.invalid"
+                        >Applicable Calender to is required</mat-error
+                      > -->
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-6 date-picker-p">
+                  <div class="col-md-4">
+                    <p>Effective date</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 50%; float: left;"
+                    >
+                      <input
+                        matInput
+                        [matDatepicker]="picker5"
+                        formControlName="effectiveDate"
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker5"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker5></mat-datepicker>
+                      <mat-error
+                        *ngIf="
+                          planCreationRulesForm.controls.effectiveDate.errors
+                            ?.required
+                        "
+                        >Effective Date is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <button
+                  style="float: right;"
+                  mat-raised-button
+                  color="primary"
+                  (click)="submitPlan($event)"
+                >
+                  Save
+                </button>
+              </form>
+              <div class="clearfix"></div>
+            </mat-card>
+            <div class="clearfix"></div>
+            <div class="mt-2 mb-0">
+              <mat-card>
+                <h3>Plan List</h3>
+                <div class="table-container">
+                  <table
+                    mat-table
+                    [dataSource]="planlistDataSource"
+                    class="mat-elevation-z8"
+                  >
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="planname">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Plan Name</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.planName }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="planperiod">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Plan period</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.planPeriodFrom }} to
+                        {{ element.planPeriodTo }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="applicableyear_1">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Applicable year</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.applicableCalenderFrom }} to
+                        {{ element.applicableCalenderTo }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="processname">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Process Name</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.processApplicable }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="applicableyear_2">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Effective year</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.effectiveDate }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="action">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Action</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        <a
+                          style="padding: 10px 5px;"
+                          (click)="editPlanList(element)"
+                          ><i class="material-icons"
+                            ><img src="assets/images/edit.png" /> </i
+                        ></a>
+                        <a
+                          style="padding: 10px 5px;"
+                          (click)="deletePlanList(element)"
+                          ><i class="material-icons"
+                            ><img src="assets/images/del.png" /> </i
+                        ></a>
+                      </td>
+                    </ng-container>
+
+                    <tr
+                      class="text-center"
+                      mat-header-row
+                      *matHeaderRowDef="planlistDisplayedColumns"
+                    ></tr>
+                    <tr
+                      class="text-center"
+                      mat-row
+                      *matRowDef="let row; columns: planlistDisplayedColumns"
+                    ></tr>
+                  </table>
+                </div>
+              </mat-card>
+            </div>
+            <div class="clearfix">
+              <mat-card class="mt-2 mb-0">
+                <form
+                  [formGroup]="employeeEligibilityRulesForm"
+                  (ngSubmit)="processEligibilityRules()"
+                >
+                  <h3>Employee Eligibility Rules for Exclusions</h3>
+                  <div class="form-dec">
+                    <div class="col-md-4-1">
+                      <div class="col-md-5">
+                        <p class="font-size15">Plan Name</p>
+                      </div>
+                      <div class="col-md-7 m-0">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                        >
+                          <mat-label>Select</mat-label>
+                          <mat-select required formControlName="planName">
+                            <ng-container *ngIf="planlistDataSource">
+                              <mat-option
+                                *ngFor="
+                                  let item of planEligibilityData$ | async
+                                "
+                                value="{{ item.id }}"
+                                >{{ item.planName }}</mat-option
+                              >
+                            </ng-container>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              employeeEligibilityRulesForm.controls.planName
+                                .errors?.required
+                            "
+                            >Plan name is required</mat-error
+                          >
+                        </mat-form-field>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div
+                    formArrayName="rules"
+                    *ngFor="let rule of rules.controls; let i = index"
+                  >
+                    <div class="form-dec" [formGroupName]="i">
+                      <div class="col-md-4-1 ">
+                        <div class="col-md-5 ">
+                          <p class="font-size15">Criteria</p>
+                        </div>
+                        <div class="col-md-7 m-0">
+                          <mat-form-field
+                            appearance="outline"
+                            style="width: 100%;"
+                          >
+                            <mat-label>Select</mat-label>
+                            <mat-select
+                              required
+                              formControlName="criteria"
+                              (selectionChange)="
+                                empEligibilityRulesSelectionChange($event, i)
+                              "
+                            >
+                              <ng-container
+                                *ngFor="let item of criteriaDataListOption"
+                              >
+                                <mat-option value="{{ item.key }}">{{
+                                  item.value
+                                }}</mat-option>
+                              </ng-container>
+                              <!-- <mat-option selected disabled>Select</mat-option>
+                              <mat-option value="saab">Grade</mat-option>
+                              <mat-option value="mercedes"
+                                >Designation</mat-option
+                              >
+                              <mat-option value="audi">Department</mat-option>
+                              <mat-option value="audi">Location</mat-option>
+                              <mat-option value="audi">Band</mat-option>
+                              <mat-option value="audi"
+                                >Sub Department</mat-option
+                              > -->
+                            </mat-select>
+                            <mat-error
+                              *ngIf="
+                                rules.controls[i]
+                                  .get('criteria')
+                                  .hasError('required')
+                              "
+                              >Criteria is required</mat-error
+                            >
+                          </mat-form-field>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="col-md-4-1 ">
+                        <div class="col-md-5">
+                          <p class="font-size15">Condition</p>
+                        </div>
+                        <div class="col-md-7 m-0">
+                          <mat-form-field
+                            appearance="outline"
+                            style="width: 100%;"
+                          >
+                            <mat-select required formControlName="condition">
+                              <mat-option selected disabled>Select</mat-option>
+                              <mat-option value="=">=</mat-option>
+                              <mat-option value=">">></mat-option>
+                              <mat-option value="<"> < </mat-option>
+                              <mat-option value=">=">>=</mat-option>
+                              <mat-option value="<="> <= </mat-option>
+                              <mat-option value="contains">Contains</mat-option>
+                            </mat-select>
+                            <mat-error
+                              *ngIf="
+                                rules.controls[i]
+                                  .get('condition')
+                                  .hasError('required')
+                              "
+                              >Condition is required</mat-error
+                            >
+                          </mat-form-field>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="col-md-4-1">
+                        <div class="col-md-5">
+                          <p class="font-size15">Value</p>
+                        </div>
+                        <div class="col-md-7 m-0">
+                          <mat-form-field
+                            appearance="outline"
+                            style="width: 100%; float: left;"
+                          >
+                            <mat-label>Select</mat-label>
+                            <mat-select required formControlName="value">
+                              <ng-container *ngIf="empEligibilityRulesValue[i]">
+                                <ng-container
+                                  *ngFor="
+                                    let item of empEligibilityRulesValue[i]
+                                  "
+                                >
+                                  <mat-option value="{{ item }}">{{
+                                    item
+                                  }}</mat-option>
+                                </ng-container>
+                              </ng-container>
+                              <!-- <mat-option value="dummy">Dummy</mat-option> -->
+                            </mat-select>
+                            <mat-error
+                              *ngIf="
+                                rules.controls[i]
+                                  .get('value')
+                                  .hasError('required')
+                              "
+                              >Value is required</mat-error
+                            >
+                          </mat-form-field>
+                          <button
+                            *ngIf="i != 0"
+                            style="background-color: transparent; float: right; width: auto; border: 0px;margin-top: 17px;
+                      color: red;
+                      margin-right: -10px"
+                            (click)="removeEmployeeEligibilityRules(i)"
+                          >
+                            X
+                          </button>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="clearfix"></div>
+                  <div class="col-md-12">
+                    <button
+                      mat-button
+                      style="color:#3A4666;"
+                      (click)="addEmployeeEligibilityRules()"
+                      type="button"
+                    >
+                      Add +
+                    </button>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="form-dec">
+                    <div class="col-md-4-1 ">
+                      <div class="col-md-12">
+                        <p class="font-size15">Save selected eligibility as</p>
+                      </div>
+                    </div>
+                    <div class="col-md-7-1">
+                      <mat-form-field appearance="outline" style="width: 100%;">
+                        <input matInput formControlName="eligibilityAs" />
+                        <mat-error
+                          *ngIf="
+                            employeeEligibilityRulesForm.controls.eligibilityAs
+                              .errors?.required
+                          "
+                          >Selected eligibility as is required</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <!-- <div class="col-md-5 m-0">
+                      <p class="font-size15">Save selected eligibility as</p>
+                    </div>
+                    <div class="col-md-7 m-0">
+                      <mat-form-field appearance="outline" style="width: 100%;">
+                        <input matInput formControlName="eligibilityAs" />
+                        <mat-error
+                          *ngIf="
+                            employeeEligibilityRulesForm.controls.eligibilityAs
+                              .errors?.required
+                          "
+                          >Selected eligibility as is required</mat-error
+                        >
+                      </mat-form-field>
+                    </div> -->
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="col-md-6">
+                    <button
+                      style="float: right;"
+                      mat-raised-button
+                      color="primary"
+                    >
+                      Save
+                    </button>
+                  </div>
+                  <div class="clearfix"></div>
+                </form>
+              </mat-card>
+            </div>
+            <div class=" mt-2 mb-0">
+              <mat-card>
+                <h3>Eligibility List</h3>
+                <div class="table-container">
+                  <table
+                    mat-table
+                    [dataSource]="eligibilitylistDataSource"
+                    class="mat-elevation-z8"
+                  >
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="eligibiltyname">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Eligibilty Name</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.eligibiltyname }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="planname">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Plan Name</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.planname }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="processname">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Process Name</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.processname }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="enabled_disabled">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Enabled/Disabled</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.enabled_disabled }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="impactedcriteria">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Impacted Criteria</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.impactedcriteria }}
+                      </td>
+                    </ng-container>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="applicableyear">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Applicable Year</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.applicableyear }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="action">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Action</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        <a
+                          style="padding: 10px 5px;"
+                          (click)="editEmployeeEligibilityList(element)"
+                          ><i class="material-icons"
+                            ><img src="assets/images/edit.png" /> </i
+                        ></a>
+                        <a
+                          style="padding: 10px 5px;"
+                          (click)="
+                            deleteEmployeeEligibilityList(element.name.id)
+                          "
+                          ><i class="material-icons"
+                            ><img src="assets/images/del.png" /> </i
+                        ></a>
+                      </td>
+                    </ng-container>
+
+                    <tr
+                      class="text-center"
+                      mat-header-row
+                      *matHeaderRowDef="eligibilitylistDisplayedColumns"
+                    ></tr>
+                    <tr
+                      class="text-center"
+                      mat-row
+                      *matRowDef="
+                        let row;
+                        columns: eligibilitylistDisplayedColumns
+                      "
+                    ></tr>
+                  </table>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="clearfix"></div>
+              </mat-card>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6-custom mt-2 ml-0">
+              <mat-card class="">
+                <div
+                  [chart]="summaryTotalEmployees"
+                  style="height: 250px;"
+                ></div>
+              </mat-card>
+            </div>
+            <div class="col-md-6-custom mt-2 mr-0" style="float: right;">
+              <mat-card *ngIf="ptype == 'enterprise'" class="chart-cart ">
+                <div class="clearfix"></div>
+                <div class="col-md-12">
+                  <div class="clearfix"></div>
+                  <button
+                    class="mt-2"
+                    style="float: left;"
+                    mat-raised-button
+                    color="primary"
+                    (click)="loadSummamryTotalGraph()"
+                  >
+                    Look Eligibility
+                  </button>
+                </div>
+                <div style="display: none;">
+                  <div class="col-md-5">
+                    <h3>Data Validation</h3>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="col-md-5 ">
+                    <p>Send data to</p>
+                  </div>
+                  <div class="col-md-7 ">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <mat-label>Select</mat-label>
+                      <mat-select matNativeControl required>
+                        <mat-option value="">BU Head</mat-option>
+                        <mat-option value="">HR BP</mat-option>
+                        <mat-option value="">Pay Manager</mat-option>
+                        <mat-option value="">L2 Manager</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <button
+                      class="mt-2"
+                      style="float: left;"
+                      mat-raised-button
+                      color="primary"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </mat-card>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Grid & Formula">
+          <div class="col-md-12">
+            <mat-card class="mt-2 mb-0">
+              <form
+                [formGroup]="populationSelectionGridRulesForm"
+                (ngSubmit)="populationSelectionGrid()"
+              >
+                <h3>Population Selection for the Grid</h3>
+                <div
+                  formArrayName="rulesgrid"
+                  *ngFor="let rule of rulesgrid.controls; let i = index"
+                >
+                  <div class="form-dec" [formGroupName]="i">
+                    <div class="col-md-4-1 ">
+                      <div class="col-md-5">
+                        <p class="font-size15">Criteria</p>
+                      </div>
+                      <div class="col-md-7">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                        >
+                          <mat-label>Select</mat-label>
+                          <mat-select
+                            matNativeControl
+                            required
+                            formControlName="criteria"
+                            (selectionChange)="
+                              populationCriteriaSelectionChange($event, i)
+                            "
+                          >
+                            <!-- <mat-select-filter
+                              [placeholder]="'Filter'"
+                              [displayMember]="'value'"
+                              [array]="criteriaDataListSelectOption"
+                              (filteredReturn)="filteredList5 = $event"
+                            ></mat-select-filter> -->
+
+                            <!-- <mat-form-field
+                              appearance="outline"
+                              style="width: 100%;"
+                            >
+                              <input
+                                matInput
+                                type="text"
+                                placeholder="Filter the list..."
+                                autocomplete="off"
+                                (keyup)="
+                                  filterListCriteria($event.target.value)
+                                "
+                                (keydown)="matSelectKeydownEvent($event)"
+                              />
+                            </mat-form-field> -->
+                            <ng-container
+                              *ngFor="let item of criteriaDataListOption"
+                            >
+                              <mat-option value="{{ item.key }}">{{
+                                item.value
+                              }}</mat-option>
+                            </ng-container>
+                          </mat-select>
+
+                          <mat-error
+                            *ngIf="
+                              rulesgrid.controls[i]
+                                .get('criteria')
+                                .hasError('required')
+                            "
+                            >Criteria is required</mat-error
+                          >
+                        </mat-form-field>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4-1 ">
+                      <div class="col-md-5">
+                        <p class="font-size15">Condition</p>
+                      </div>
+                      <div class="col-md-7">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                        >
+                          <mat-select required formControlName="condition">
+                            <mat-option selected disabled>Select</mat-option>
+                            <mat-option value="=">=</mat-option>
+                            <mat-option value=">">></mat-option>
+                            <mat-option value="<">< </mat-option>
+                            <mat-option value=">=">>=</mat-option>
+                            <mat-option value="<="><= </mat-option>
+                            <mat-option value="Contains">Contains</mat-option>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              rulesgrid.controls[i]
+                                .get('condition')
+                                .hasError('required')
+                            "
+                            >Condition is required</mat-error
+                          >
+                        </mat-form-field>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4-1">
+                      <div class="col-md-5">
+                        <p class="font-size15">Value</p>
+                      </div>
+                      <div class="col-md-7">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                        >
+                          <mat-label>Select</mat-label>
+                          <mat-select required formControlName="value">
+                            <ng-container *ngIf="populationSelectionValue[i]">
+                              <ng-container
+                                *ngFor="let item of populationSelectionValue[i]"
+                              >
+                                <mat-option value="{{ item }}">{{
+                                  item
+                                }}</mat-option>
+                              </ng-container>
+                            </ng-container>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              rulesgrid.controls[i]
+                                .get('condition')
+                                .hasError('required')
+                            "
+                            >Condition is required</mat-error
+                          >
+                        </mat-form-field>
+                        <button
+                          *ngIf="i != 0"
+                          style="background-color: transparent; float: left; width: auto; border: 0px;margin-top: 17px;
+                     margin-right: -10px"
+                          (click)="removePopulationSelectionGridRules(i)"
+                        >
+                          X
+                        </button>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <button
+                    mat-button
+                    style="color:#3A4666;"
+                    (click)="addPopulationSelectionGridRules()"
+                    type="button"
+                  >
+                    Add +
+                  </button>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6 ">
+                  <div class="col-md-6 m-0">
+                    <p class="font-size15">Name The Selected population</p>
+                  </div>
+                  <div class="col-md-6 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <input matInput placeholder="" id="selectedPopulation" />
+                    </mat-form-field>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <button
+                    (click)="savePopulation()"
+                    style="float: right;"
+                    mat-raised-button
+                    color="primary"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </mat-card>
+          </div>
+
+          <div class="col-md-12 mt-2 mb-0">
+            <mat-card class="mt-2">
+              <h3>List Of population groups</h3>
+              <div class="table-container">
+                <table
+                  mat-table
+                  [dataSource]="populationGroupsDataSource"
+                  class="mat-elevation-z8"
+                >
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="populationgroup">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Population roup</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.populationgroup }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="impactedfields">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Impacted Fields</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.impactedfields }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="createddate">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Created Date</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.createddate | date: "shortDate" }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="action">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Action</span>
+                    </th>
+                    <td
+                      class="text-center"
+                      class="text-center"
+                      mat-cell
+                      *matCellDef="let element"
+                    >
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="viewPopulationGroup(element)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/eyes.png" /> </i
+                      ></a>
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="editPopulationGroup(element)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/edit.png" /> </i
+                      ></a>
+
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="delPopulation(element.id)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/del.png" /> </i
+                      ></a>
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="copyPopulationGroup(element)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/comment.png" /> </i
+                      ></a>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    class="text-center"
+                    mat-header-row
+                    *matHeaderRowDef="populationGroupsDisplayedColumns"
+                  ></tr>
+                  <tr
+                    class="text-center"
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: populationGroupsDisplayedColumns
+                    "
+                  ></tr>
+                </table>
+              </div>
+            </mat-card>
+          </div>
+          <div class="col-md-12">
+            <mat-card
+              class="mt-2"
+              *ngIf="ptype == 'premium' || ptype == 'enterprise'"
+            >
+              <form
+                [formGroup]="rangeCreationRulesForm"
+                (ngSubmit)="rangeCreationFormSubmit()"
+              >
+                <h3>Range Creation</h3>
+                <div class="col-md-6 ">
+                  <div class="col-md-5 m-0">
+                    <p class="font-size15">Select Field</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <mat-label>Select</mat-label>
+                      <mat-select
+                        matNativeControl
+                        formControlName="impactFieldName"
+                        required
+                      >
+                        <mat-option value="Compa Ratio">Compa Ratio</mat-option>
+                        <mat-option value="Range Penetration"
+                          >Range Penetration</mat-option
+                        >
+                        <mat-option value="Percent Rank"
+                          >Percent Rank</mat-option
+                        >
+                      </mat-select>
+                      <mat-error
+                        *ngIf="
+                          rangeCreationRulesForm.controls.impactFieldName.errors
+                            ?.required
+                        "
+                        >Impact Field is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                <h3 class="mb-2 mt-2">Create Slabs</h3>
+                <div class="pad-left">
+                  <div formArrayName="rangerules">
+                    <div
+                      *ngFor="let rule of rangerules.controls; let i = index"
+                    >
+                      <div [formGroupName]="i">
+                        <div class="col-md-5 ">
+                          <div class="col-md-4 m-0">
+                            <p class="font-size15">Form</p>
+                          </div>
+                          <div class="col-md-7 m-0">
+                            <mat-form-field
+                              appearance="outline"
+                              style="width: 100%;"
+                            >
+                              <input
+                                matInput
+                                placeholder=""
+                                formControlName="from"
+                              />
+                              <mat-error
+                                *ngIf="
+                                  rangerules.controls[i]
+                                    .get('from')
+                                    .hasError('required')
+                                "
+                                >From Slab Value is required</mat-error
+                              >
+                            </mat-form-field>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="col-md-5 ">
+                          <div class="col-md-4 m-0">
+                            <p class="font-size15">to</p>
+                          </div>
+                          <div class="col-md-7 m-0">
+                            <mat-form-field
+                              appearance="outline"
+                              style="width: 90%; float: left;"
+                            >
+                              <input
+                                matInput
+                                placeholder=""
+                                formControlName="to"
+                              />
+                              <mat-error
+                                *ngIf="
+                                  rangerules.controls[i]
+                                    .get('to')
+                                    .hasError('required')
+                                "
+                              >
+                                To Slab value is required
+                              </mat-error>
+                            </mat-form-field>
+                            <button
+                              *ngIf="i != 0"
+                              style="background-color: transparent; float: right; width: auto; border: 0px;margin-top: 17px;
+                        margin-right: -10px"
+                              (click)="removeRangeCreationRules(i)"
+                            >
+                              X
+                            </button>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    mat-button
+                    style="color:#3A4666;"
+                    (click)="addRangeCreationRules(null, null)"
+                    type="button"
+                  >
+                    + Add
+                  </button>
+                </div>
+                <div class="col-md-6 ">
+                  <div class="col-md-4 m-0">
+                    <p class="font-size15">Save as Range</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <input
+                        matInput
+                        placeholder=""
+                        formControlName="rangeName"
+                      />
+                      <mat-error
+                        *ngIf="
+                          rangeCreationRulesForm.controls.rangeName.errors
+                            ?.required
+                        "
+                      >
+                        Range Name is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="clearfix"></div>
+                </div>
+                <div class="col-md-6">
+                  <button
+                    style="float: left;"
+                    mat-raised-button
+                    color="primary"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+              <div class="clearfix"></div>
+              <div class="col-md-12 mt-2 mb-0">
+                <div class="table-container">
+                  <table
+                    mat-table
+                    [dataSource]="rangeCreationDataSource"
+                    class="mat-elevation-z8"
+                  >
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="name">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Range Name</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.name }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="impactedField">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Impacted field</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.impactedField }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="ranges">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Ranges</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        {{ element.ranges }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="action">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>
+                        <span>Action</span>
+                      </th>
+                      <td
+                        class="text-center"
+                        mat-cell
+                        *matCellDef="let element"
+                      >
+                        <a
+                          style="padding: 10px 5px;"
+                          (click)="editRange(element)"
+                          ><i class="material-icons"
+                            ><img src="assets/images/edit.png" /> </i
+                        ></a>
+
+                        <a
+                          style="padding: 10px 5px;"
+                          (click)="deleteRange(element, element.id)"
+                          ><i class="material-icons"
+                            ><img src="assets/images/del.png" /> </i
+                        ></a>
+                      </td>
+                    </ng-container>
+
+                    <tr
+                      class="text-center"
+                      mat-header-row
+                      *matHeaderRowDef="rangeCreationDisplayedColumns"
+                    ></tr>
+                    <tr
+                      class="text-center"
+                      mat-row
+                      *matRowDef="
+                        let row;
+                        columns: rangeCreationDisplayedColumns
+                      "
+                    ></tr>
+                  </table>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </mat-card>
+          </div>
+
+          <div class="clerfix"></div>
+          <div class="col-md-12">
+            <mat-card class="mt-2">
+              <h3>Grid Setting</h3>
+              <div class="col-md-3">
+                <p class="font-size15">Create Grid</p>
+              </div>
+              <form
+                [formGroup]="gridSettingForm"
+                (ngSubmit)="saveGridSetting()"
+              >
+                <div class="col-md-5-1">
+                  <div class="col-md-5">
+                    <p class="font-size15">X Axis</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <mat-label>Select</mat-label>
+                      <mat-select
+                        matNativeControl
+                        formControlName="xAxis"
+                        required
+                      >
+                        <ng-container
+                          *ngFor="let item of gridAxisData | keyvalue"
+                        >
+                          <mat-option value="{{ item.value }}">{{
+                            item.value
+                          }}</mat-option>
+                        </ng-container>
+                      </mat-select>
+                      <mat-error
+                        *ngIf="gridSettingForm.controls.xAxis.errors?.required"
+                      >
+                        X Axis Value is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-5-1">
+                  <div class="col-md-5">
+                    <p class="font-size15">Y Axis</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <!-- <input matInput placeholder="Compa ratio_all" /> -->
+                      <mat-label>Select</mat-label>
+                      <mat-select
+                        matNativeControl
+                        formControlName="yAxis"
+                        required
+                      >
+                        <ng-container
+                          *ngFor="let item of gridAxisData | keyvalue"
+                        >
+                          <mat-option value="{{ item.value }}">{{
+                            item.value
+                          }}</mat-option>
+                        </ng-container>
+                      </mat-select>
+                      <mat-error
+                        *ngIf="gridSettingForm.controls.yAxis.errors?.required"
+                      >
+                        Y Axis Value is Required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-3">
+                  <p class="font-size15"></p>
+                </div>
+                <div class="col-md-5-1">
+                  <div class="col-md-5">
+                    <p class="font-size15">Grid Result</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <!-- <input matInput placeholder="% Increment" /> -->
+                      <mat-label>Select</mat-label>
+                      <mat-select
+                        matNativeControl
+                        formControlName="result"
+                        required
+                      >
+                        <mat-option value=" % Increment">
+                          % Increment</mat-option
+                        >
+                        <mat-option value="Absolute Increment"
+                          >Absolute Increment</mat-option
+                        >
+                      </mat-select>
+
+                      <mat-error
+                        *ngIf="gridSettingForm.controls.result.errors?.required"
+                      >
+                        Grid Result is Required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-5-1">
+                  <div class="col-md-5">
+                    <p class="font-size15">Impact Filed</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <!-- <input matInput placeholder="Fixed CTC" /> -->
+                      <mat-label>Select</mat-label>
+                      <mat-select
+                        matNativeControl
+                        required
+                        formControlName="impactField"
+                      >
+                        <mat-option value="Total CTC">Total CTC</mat-option>
+                        <mat-option value="Fixed CTC ">Fixed CTC </mat-option>
+                      </mat-select>
+                      <mat-error
+                        *ngIf="
+                          gridSettingForm.controls.impactField.errors?.required
+                        "
+                      >
+                        Impacted Field is Required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-3">
+                  <p class="font-size15"></p>
+                </div>
+                <div class="col-md-5-1">
+                  <div class="col-md-5">
+                    <p class="font-size15">Name Grid as</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <input
+                        matInput
+                        placeholder="Compa ratio_all Vs Rating"
+                        formControlName="name"
+                      />
+                      <mat-error
+                        *ngIf="gridSettingForm.controls.name.errors?.required"
+                      >
+                        Name Grid is Required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <p class="font-size15"></p>
+                  <button
+                    style="float: left;"
+                    mat-raised-button
+                    color="primary"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+              <div class="clearfix"></div>
+
+              <!-- <div class="col-md-5-1">
+                <div class="col-md-5">
+                  <p class="font-size15">Load Selection</p>
+                </div>
+                <div class="col-md-7 m-0">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Select</mat-label>
+                    <mat-select
+                      matNativeControl
+                      (selectionChange)="selectChange($event)"
+                    >
+                      <mat-option value="Load Anchor Point"
+                        >Load Anchor Point</mat-option
+                      >
+                      <mat-option value="Load Custom Percentage"
+                        >Load Custom Percentage</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <button
+                  style="float: right; width: 100%;"
+                  mat-raised-button
+                  color="primary"
+                  (click)="loadAnchorPointPopup()"
+                >
+                  Load
+                </button>
+                <div class="clearfix"></div>
+              </div> -->
+              <div class="clearfix"></div>
+            </mat-card>
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-md-12 mt-2 mb-0">
+            <mat-card>
+              <h3>List of Saved grid</h3>
+              <div class="table-container">
+                <table
+                  mat-table
+                  [dataSource]="savedGridDataSource"
+                  class="mat-elevation-z8"
+                >
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="gridname">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Grid Name</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.gridname }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="impactedfield">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Impacted Field</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.impactedfield }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="xaxis">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>X Axis</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.xaxis }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="yaxis">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Y Axis</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.yaxis }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="action">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      Action
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="
+                          loadcustomPercentagePopup(element.anchorPointId)
+                        "
+                        ><i class="material-icons"
+                          ><img src="assets/images/eyes.png" /> </i
+                      ></a>
+
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="editGridSetting(element)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/edit.png" /> </i
+                      ></a>
+
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="deleteGridSetting(element.id)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/del.png" /> </i
+                      ></a>
+
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="loadAnchorPointPopup(element.anchorPointId)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/eyes.png" /> </i
+                      ></a>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    class="text-center"
+                    mat-header-row
+                    *matHeaderRowDef="savedGridDisplayedColumns"
+                  ></tr>
+                  <tr
+                    class="text-center"
+                    mat-row
+                    *matRowDef="let row; columns: savedGridDisplayedColumns"
+                  ></tr>
+                </table>
+              </div>
+            </mat-card>
+          </div>
+          <div class="col-md-12 mt-2 mb-0">
+            <mat-card *ngIf="ptype == 'enterprise'">
+              <h3>Formula Setting</h3>
+              <!-- <div class="col-md-6 m-0">
+                <div class="col-md-6">
+                  <p class="font-size15">Select Field</p>
+                </div>
+                <div class="col-md-6 m-0">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Select</mat-label>
+                    <mat-select matNativeControl required> </mat-select>
+                  </mat-form-field>
+                </div>
+              </div> -->
+              <form
+                [formGroup]="formulaSettingRulesForm"
+                (ngSubmit)="formulaSettingSave()"
+                #formulaSettingForm="ngForm"
+              >
+                <div class="clearfix"></div>
+                <div class="col-md-6 ">
+                  <div class="col-md-6 m-0">
+                    <p class="font-size15">Formula Linking Matrix</p>
+                  </div>
+                  <div class="col-md-6 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <input
+                        matInput
+                        formControlName="formulaLinkingMatrix"
+                        placeholder="0.5* Rating Vs Grade +1*Promotion "
+                      />
+                      <mat-error
+                        *ngIf="
+                          formulaSettingRulesForm.controls.formulaLinkingMatrix
+                            .errors?.required
+                        "
+                      >
+                        Formula Linking Matrix is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6 ">
+                  <div class="col-md-6 m-0">
+                    <p class="font-size15">Saved Formula as</p>
+                  </div>
+                  <div class="col-md-6 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <input
+                        matInput
+                        formControlName="saveFormulaAs"
+                        placeholder="Merit Increase_New BU "
+                      />
+                      <!-- <mat-error
+                        *ngIf="
+                          formulaSettingRulesForm.get('')
+                        "
+                      >
+                        Saved Formula is required
+                      </mat-error> -->
+                      <mat-error
+                        *ngIf="
+                          formulaSettingRulesForm.controls.saveFormulaAs.errors
+                            ?.required
+                        "
+                      >
+                        Saved Formula is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="col-md-6">
+                  <button
+                    style="float: left;"
+                    mat-raised-button
+                    color="primary"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+
+              <div class="clearfix"></div>
+              <h3>Saved Formula</h3>
+              <div class="table-container">
+                <table
+                  mat-table
+                  [dataSource]="savedFormulaDataSource"
+                  class="mat-elevation-z8"
+                >
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="formulafor">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Formula For</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.formulafor }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="formula">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Formula</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.formula }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="action">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      Action
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="editFormulaSetting(element)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/edit.png" /> </i
+                      ></a>
+
+                      <a
+                        style="padding: 10px 5px;"
+                        (click)="deleteFormulaSetting(element.id)"
+                        ><i class="material-icons"
+                          ><img src="assets/images/del.png" /> </i
+                      ></a>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    class="text-center"
+                    mat-header-row
+                    *matHeaderRowDef="savedFormulaDisplayedColumns"
+                  ></tr>
+                  <tr
+                    class="text-center"
+                    mat-row
+                    *matRowDef="let row; columns: savedFormulaDisplayedColumns"
+                  ></tr>
+                </table>
+              </div>
+              <div class="clearfix"></div>
+            </mat-card>
+          </div>
+
+          <div class="clearfix"></div>
+        </mat-tab>
+        <mat-tab label="Simulation">
+          <div class="col-md-12">
+            <mat-card class="mt-2">
+              <h3>Simulation</h3>
+              <div class="col-md-6">
+                <div class="col-md-5 m-0"><p class="font-size15">Calender Year</p> </div>
+                <div class="col-md-6 m-0">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Choose one</mat-label>
+                <mat-select >
+                <mat-option value="">1 JAN 2019 to 31 DEC 2019</mat-option>
+                <mat-option value="">1 JAN 2018 to 31 DEC 2018</mat-option>
+                </mat-select>
+                </mat-form-field>
+                </div>
+                </div>
+                <div class="col-md-6 ">
+                <div class="col-md-6 m-0"><p class="font-size15" style="text-align: right; padding-right: 20px;">Plan Name</p> </div>
+                <div class="col-md-6 m-0">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Choose one</mat-label>
+                <mat-select >
+                <mat-option value="">Merit Increase Plan_2019</mat-option>
+                <mat-option value="">Promotion Plan_1029</mat-option>
+                <mat-option value="">Bonus Plan_1029</mat-option>
+                </mat-select>
+                </mat-form-field>
+                </div>
+               
+                </div>
+                <button style="float: right;margin-right: 27px;" mat-raised-button color="primary"> Load </button>
+                <div class="clearfix"></div>
+            </mat-card>
+            <mat-card class="mt-2">
+              <h3>Link formula with Population groups</h3>
+              <div class="col-md-6">
+                <div class="filter-list height-mat " style="float: left; width: 70%;">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <!-- <mat-label> Filter </mat-label> -->
+                    <input
+                      matInput
+                      placeholder="Search "
+                    />
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <button style="float: right;" mat-button [matMenuTriggerFor]="beforeMenu"> <span class="material-icons"> dehaze </span></button>
+                <mat-menu #beforeMenu="matMenu" xPosition="before">
+                  <button mat-menu-item><strong>Activity Applicable For <br/> all population groups</strong></button>
+                  <button mat-menu-item  (click)="SendLockedDataValidation()">Send lock data for validation</button>
+                  <button mat-menu-item>lock data for Business check</button>
+                  <button mat-menu-item>Data Summery</button>
+                  <button mat-menu-item>process Data for simulation</button>
+                </mat-menu>
+              </div>
+              <div class="clearfix"></div>
+              <div class="table-container">
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="populationgroup">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span>Population Group</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.populationgroup }}
+                  </td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="impactedfields">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span>Impacted Criteria</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.impactedfields }}
+                  </td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="createddate">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span>Created Date</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.createddate }}
+                  </td>
+                </ng-container>
+                <!-- Position Column -->
+                <ng-container matColumnDef="processlinked">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span>Process Linked</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.processlinked }}
+                  </td>
+                </ng-container>
+                <!-- Position Column -->
+                <ng-container matColumnDef="headcount">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span>Head Count</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.headcount }}
+                  </td>
+                </ng-container>
+                <!-- Position Column -->
+                
+                <!-- Position Column -->
+                <ng-container matColumnDef="linkedformula">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span>Linked Formula</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.linkedformula }}
+                  </td>
+                </ng-container>
+                <!-- Position Column -->
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span>Action</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <a>
+                     <i class="material-icons">
+                       <img src="assets/images/edit.png">
+                     </i>
+                   </a> 
+                   <a (click)="LoadSimulationPopup()">
+                    <!-- {{
+                     element.simulate
+                   }} -->
+                   <i class="material-icons">
+                     <img src="assets/images/edit.png">
+                   </i>
+                 </a> 
+                   <a >
+                    <i class="material-icons">
+                      <img src="assets/images/edit.png">
+                    </i>
+                  </a> 
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+              </table>
+              <div class="col-md-6" style="width: 33%;">
+                <p style="margin-top: 10px;">Check total no og data processed for simualtion</p>
+              </div>
+              <div class="col-md-6">
+                <div style="float: left; max-width: 140px; margin-right: 20px; margin-top:10px">
+                  <button style="float: left;" mat-raised-button color="primary"> View </button>
+                </div>
+                <div style="float: left; width: 100px;">
+                  <mat-form-field  appearance="outline" style="width: 100%;" >
+                    <mat-label></mat-label>
+                    <input matInput>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+              
+            </mat-card>
+         
+            <mat-card class="mt-2 Analysis-Simulation">
+              <h3>Simulation Analysis</h3>
+
+              <form
+                [formGroup]="simulationAnalysisRulesForm"
+                (ngSubmit)="simulationAnalysisForm()"
+              >
+                <div class="clearfix"></div>
+                <div class="col-md-4-1">
+                  <div class="col-md-5 m-0">
+                    <p class="font-size15">Population Groups</p>
+                  </div>
+                  <div class="col-md-7 m-0">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <mat-label>Select</mat-label>
+                      <mat-select
+                        matNativeControl
+                        required
+                        (selectionChange)="simulationFilterChange($event)"
+                      >
+                        <mat-option value="Parity">Parity</mat-option>
+                        <mat-option value="Outliers">Outliers</mat-option>
+                        <mat-option value="Grade">Grade</mat-option>
+                        <mat-option value="Rating">Rating</mat-option>
+                        <mat-option value="Department">Department</mat-option>
+                        <mat-option value="Business Unit"
+                          >Business Unit</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              
+                <div class="clearfix"></div>  
+                <div
+                  formArrayName="simulationrules"
+                  *ngFor="let rule of simulationrules.controls; let i = index"
+                >
+                  <div [formGroupName]="i">
+                    <div class="col-md-4-1 ">
+                      <div class="col-md-5 m-0">
+                        <p class="font-size15">Criteria</p>
+                      </div>
+                      <div class="col-md-7 m-0">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                        >
+                          <mat-label>Select</mat-label>
+                          <mat-select
+                            matNativeControl
+                            required
+                            formControlName="criteria"
+                            (selectionChange)="
+                              simulationCriteriaSelectionChange($event, i)
+                            "
+                          >
+                            <ng-container
+                              *ngFor="let item of criteriaDataListOption"
+                            >
+                              <mat-option value="{{ item.key }}">{{
+                                item.value
+                              }}</mat-option>
+                            </ng-container>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              simulationrules.controls[i]
+                                .get('criteria')
+                                .hasError('required')
+                            "
+                          >
+                            Criteria is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4-1 ">
+                      <div class="col-md-5 m-0">
+                        <p class="font-size15 text-center">Condition</p>
+                      </div>
+                      <div class="col-md-7 m-0">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                        >
+                          <mat-label>Select</mat-label>
+                          <mat-select
+                            matNativeControl
+                            required
+                            formControlName="condition"
+                          >
+                            <mat-option value="=">=</mat-option>
+                            <mat-option value=">">></mat-option>
+                            <mat-option value="<">< </mat-option>
+                            <mat-option value=">=">>=</mat-option>
+                            <mat-option value="<="><= </mat-option>
+                            <mat-option value="Contains">Contains</mat-option>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              simulationrules.controls[i]
+                                .get('condition')
+                                .hasError('required')
+                            "
+                          >
+                            Condition is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4-1">
+                      <div class="col-md-5 m-0 text-center">
+                        <p class="font-size15">Value</p>
+                      </div>
+                      <div class="col-md-7 m-0">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                          style="width: 90%; float: left;"
+                        >
+                          <mat-label>Select</mat-label>
+
+                          <mat-select
+                            matNativeControl
+                            required
+                            formControlName="value"
+                          >
+                            <ng-container
+                              *ngIf="simulationAnalysisCriteriaValue[i]"
+                            >
+                              <ng-container
+                                *ngFor="
+                                  let item of simulationAnalysisCriteriaValue[i]
+                                "
+                              >
+                                <mat-option value="{{ item }}">{{
+                                  item
+                                }}</mat-option>
+                              </ng-container>
+                            </ng-container>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              simulationrules.controls[i]
+                                .get('value')
+                                .hasError('required')
+                            "
+                          >
+                            Value is required
+                          </mat-error>
+                        </mat-form-field>
+                        <button
+                          *ngIf="i != 0"
+                          style="background-color: transparent; float: right; width: auto; border: 0px;margin-top: 17px;
+                      margin-right: -10px"
+                          (click)="removeSimulationAnalysisRules(i)"
+                        >
+                          X
+                        </button>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="col-md-12">
+                  <button
+                    mat-button
+                    style="color:#3A4666;"
+                    (click)="addSimulationAnalysisRules()"
+                    type="button"
+                  >
+                    Add +
+                  </button>
+                </div>
+                <div class="clearfix"></div>
+                
+                <div class="col-md-12">
+                  <button style="float: right;" mat-raised-button color="primary">
+                    Load
+                  </button>
+                </div>
+              </form>
+              <div class="clearfix"></div>
+                         
+            </mat-card>
+            
+            <mat-card class="mt-2">
+               <div class="col-md-7 text-center">
+                <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button style="margin-right: 30px;" value="data_simulation" (change)="viewListData($event)" checked>View list of data simulation</mat-radio-button>
+                  <mat-radio-button value="data_validation" (change)="viewListData($event)">View list of data validation</mat-radio-button>
+                </mat-radio-group>
+              </div> 
+              <div class="col-md-5">
+                <button style="float: right;" mat-button [matMenuTriggerFor]="beforeMenu1"><span class="material-icons"> dehaze </span></button>
+                <mat-menu #beforeMenu1="matMenu" xPosition="before">
+                  <button mat-menu-item>Download Data</button>
+                </mat-menu>
+              </div> 
+              <div class="clearfix"></div>
+              <div class="table-container">
+                <table mat-table [dataSource]="simulation2DataSource" matSort>
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="employeecode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Employee Code
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.employeecode }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.name }}
+                    </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="grade">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Grade
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.grade }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Rating
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.rating }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Department
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.department }}
+                    </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="currentsalary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      CurrentSalary
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.currentsalary }}
+                    </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="benchmarksalary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Benchmark Salary
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.benchmarksalary }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="comparatio">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Compa Ratio
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.comparatio }}
+                    </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="suggestedincrement">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Suggested Increment
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.suggestedincrement }}
+                    </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="marketcorrectioninput">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Market Correction Input %
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.marketcorrectioninput }}
+                    </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="promotion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Promotion
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.promotion }}
+                    </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="totalpercentincrement">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Total % Increment
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.totalpercentincrement }}
+                    </td>
+                  </ng-container>
+                  
+
+                  <!-- Table 2 Extra Data Starts -->
+                  <ng-container matColumnDef="businesscorrectionpercent">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Business Correction %
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.businesscorrectionpercent }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="totalhikepercent">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Total Hike %
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.totalhikepercent }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="increasedsalary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Increased Salary
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.increasedsalary }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="finalsalary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Final Salary
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.finalsalary }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="validatedbyrole">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Validated by role
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.validatedbyrole }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="validatedbyname">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Validated by name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.validatedbyname }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="validationcomment">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Validation Comment
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.validationcomment }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="finalinputcomments">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Final Input Comments
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.finalinputcomments }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="finalinput">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Final Input
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.finalinput }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Table 2 Extra Data Ends -->
+
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="action">
+                    <th style="min-width: 100px;" mat-header-cell *matHeaderCellDef>Action</th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      <a
+                        (click)="editSimulationPopup()"
+                        style="padding: 10px 5px;"
+                        ><i class="material-icons"
+                          ><img src="assets/images/edit.png" /> </i
+                      ></a>
+                      <a
+                      (click)="EditData()"
+                      style="padding: 10px 5px;"
+                      ><i class="material-icons"
+                        ><img src="assets/images/edit.png" /> </i
+                    ></a>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="simulation2DisplayedColumns"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: simulation2DisplayedColumns"
+                  ></tr>
+                </table>
+              </div>
+            </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab label="Letter Generation">
+          <div class="col-md-12">
+            <mat-card class="mt-2">
+              <div class="clearfix"></div>
+              <h3>Letter Templates</h3>
+              <div class="table-container">
+                <table mat-table [dataSource]="letterTemplateDataSource">
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="name">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Name</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.name }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="templateapplicability">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Template Applicability</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.templateapplicability }}
+                    </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="enabled_disabled">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      <span>Enabled/Disabled</span>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let element">
+                      {{ element.enabled_disabled }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="action">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef>
+                      Action
+                    </th>
+                    <td
+                      class="text-center"
+                      class="text-center"
+                      mat-cell
+                      *matCellDef="let element"
+                    >
+                      <a (click)="LetterGeneration()" style="padding: 10px 5px;"
+                        ><i class="material-icons"
+                          ><img src="assets/images/eyes.png" /> </i
+                      ></a>
+                      <a style="padding: 10px 5px;" href=""
+                        ><i class="material-icons"
+                          ><img src="assets/images/edit.png" /> </i
+                      ></a>
+
+                      <a style="padding: 10px 5px;" href=""
+                        ><i class="material-icons"
+                          ><img src="assets/images/del.png" /> </i
+                      ></a>
+                      <a style="padding: 10px 5px;" href=""
+                        ><i class="material-icons"
+                          ><img src="assets/images/comment.png" /> </i
+                      ></a>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    class="text-center"
+                    mat-header-row
+                    *matHeaderRowDef="letterTemplateDisplayedColumns"
+                  ></tr>
+                  <tr
+                    class="text-center"
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: letterTemplateDisplayedColumns
+                    "
+                  ></tr>
+                </table>
+              </div>
+              <div class="clearfix"></div>
+            </mat-card>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</main>

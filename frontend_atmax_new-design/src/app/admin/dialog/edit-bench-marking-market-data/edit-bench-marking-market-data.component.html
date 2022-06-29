@@ -1,0 +1,45 @@
+<h3 mat-dialog-title>Edit Market Data</h3>
+<div mat-dialog-content>
+  <div class="col-md-4">
+    <p>Data Set Name</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Data Set Name" value="Market data 1" />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <p>Currency</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Currency" value="INR" />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <p>Ageing (%)</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Ageing (%)" value="8" />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <p>Field Impacted</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Field Impacted" value="Total CTC" />
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button class="submit" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      Save
+    </button>
+    <button class="cancel" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      Cancel
+    </button>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div mat-dialog-content>
+<p>Date: 21 Jan 2020</p>
+<p>Dear Santosh Kumar</p>
+<p>Platform, Technology<br/>
+  Mumbai
+  </p>
+<p>Subject: Merit Increase Cycle 2019
+</p>
+<p>Basis your performance and contribution to the organization, we would like to inform you that your performance has been rated as 4 (Good).
+
+</p>
+<p>Your new compensation is as below and will be effective from 1st April 2020. Your new compensation is result of multiple parameters like performance, potential, pay parity, budget, salary positioning etc.
+</p>
+<div class="clearfix"></div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="salaryhead">
+    <th mat-header-cell *matHeaderCellDef> Salary Head </th>
+    <td mat-cell *matCellDef="let element"> {{element.salaryhead}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="current">
+    <th mat-header-cell *matHeaderCellDef> Current </th>
+    <td mat-cell *matCellDef="let element"> {{element.revised}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="revised">
+    <th mat-header-cell *matHeaderCellDef> Revised </th>
+    <td mat-cell *matCellDef="let element"> {{element.revised}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+<div class="clearfix"></div>
+<p>Your compensation is confidential in nature and you are prohibited to discuss it with others which in such case may attract penalties as decided by organisation.</p>
+<p>Other terms and condition will remain same as per last communication from the organisation.</p>
+<p>We wish you very best in your continued association with the organization and your valuable contribution.
+</p>
+<p>Regards,<br/>
+
+  Vikram Gupta<br/>
+  CEO
+  </p>
+
+</div>
+<div mat-dialog-actions style="display: block; border-top:1px solid #ccc">
+  <div class="float-right">
+    
+    <button style="margin-left: 15px;"  class="cancel" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      Close
+    </button>
+    <button class="cancel" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      Download
+    </button>
+  </div>
+</div>

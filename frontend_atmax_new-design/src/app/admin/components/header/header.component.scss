@@ -1,0 +1,284 @@
+.header-col-1{
+    width: 33.33%;
+    float: left;
+    display: block;
+}
+h2{
+    font-weight: 400;
+    margin:12px 0px;
+    padding: 0px;
+    font-size: 20px;
+}
+.notification{
+    cursor: pointer;
+    background-color: #fff;
+    padding: 10px;
+    float: right;
+    margin-top:5px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    position: relative;
+    margin-right: 25px;
+    // box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
+}
+.notification-item{
+    position: absolute;
+    right: -3px;
+    top: -3px;
+    color: #ff795a;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid#ccc;
+    text-align: center;
+    font-size: 15px;
+    background: #fff;
+    line-height: 20px;
+}
+.profile{
+    width: 55%;
+    float: right;
+    padding: 5px ;
+}
+.profile i{
+   color: #ff795a;
+}
+
+.profile button {
+    background-color: #fff;
+    width: 100%;
+    border:0;
+    padding: 10px;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0, .35) !important;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0, .35) !important;
+    box-shadow: 0 0 10px rgba(0,0,0, .35) !important;
+    border-radius: 5px;
+}
+.profile span{
+    width: 45%;
+    display: block;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+    float: left;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+    padding: 0 10px;
+}
+.min-width{
+    min-width: 200px;
+}
+.profile i{
+    float: right;
+    line-height: 30px;
+}
+.profile button img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    float: left;
+}
+header{
+    padding: 10px 25px;
+    margin-left: 17%;
+    background-color: #f5f5f5;
+}
+.nav-icon{
+    display: none;
+}
+@media only screen and (min-width:981px) and (max-width:1199px) {
+    header{
+        margin-left: 17%;
+        padding: 10px 15px;
+    }
+    
+    .nav-icon{
+        display: none;
+    }
+    .profile{
+        width: 54%;
+        float: right;
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+    .notification{
+        cursor: pointer;
+    width: 20px;
+    margin-right: 0px;
+    height: 20px;}
+    .material-icons{
+        font-size: 20px;
+    }
+    .profile button{
+        padding: 5px;
+    }
+   
+    h2{
+        font-size: 18px;
+    }
+   
+}
+@media only screen and (min-width:768px) and (max-width:980px) {
+    header{
+        margin-left: 0%;
+        padding: 10px 15px;
+    }
+    .d-none{
+        display: none;
+    }
+    .head-col-m{
+        width: 40%;
+    }
+    .head-col-m-1{
+        width: 60%;
+    }
+    .nav-icon{
+        width: 40px;
+        float: right;
+    }
+    .profile{
+        width: 43%;
+        float: right;
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+    .notification{
+        cursor: pointer;
+    width: 20px;
+    margin-right: 0px;
+    height: 20px;}
+    .material-icons{
+        font-size: 20px;
+    }
+    .profile button{
+        padding: 5px;
+    }
+    .nav-icon{
+        width: 40px;
+        margin-top:5px;
+        border-radius: 5px;
+        height: 40px;
+        text-align: center;
+        background-color: #fff;
+        line-height: 48px;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+        display: block;
+    }
+    h2{
+        font-size: 18px;
+    }
+    .profile span{
+       
+    }
+}
+@media only screen and (min-width:640px) and (max-width:767px) {
+    header{
+        margin-left: 0%;
+        padding: 10px 15px;
+    }
+    .d-none{
+        display: none;
+    }
+    .head-col-m{
+        width: 40%;
+    }
+    .head-col-m-1{
+        width: 60%;
+    }
+    .nav-icon{
+        width: 40px;
+        float: right;
+    }
+    .profile{
+        width: 43%;
+        float: right;
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+    .notification{
+        cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-right: 0px;
+    float: right;
+}
+    .material-icons{
+        font-size: 20px;
+    }
+    .profile button{
+        padding: 5px;
+    }
+    .nav-icon{
+        width: 40px;
+        margin-top:5px;
+        border-radius: 5px;
+        height: 40px;
+        text-align: center;
+        background-color: #fff;
+        line-height: 48px;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+        display: block;
+    }
+    h2{
+        font-size: 18px;
+    }
+    .profile span{
+        display: block;
+    }
+}
+@media only screen and (min-width:320px) and (max-width:639px) {
+    header{
+        margin-left: 0%;
+        padding: 10px 15px;
+    }
+    .d-none{
+        display: none;
+    }
+    .head-col-m{
+        width: 40%;
+    }
+    .head-col-m-1{
+        width: 60%;
+    }
+    .nav-icon{
+        width: 40px;
+        float: right;
+    }
+    .profile{
+        width: 43%;
+        float: right;
+        margin-left: 5%;
+        margin-right: 3%;
+    }
+    .notification{
+        cursor: pointer;
+    width: 20px;
+    margin-right: 0%;
+    height: 20px;}
+    .material-icons{
+        font-size: 20px;
+    }
+    .profile button{
+        padding: 5px;
+    }
+    .nav-icon{
+        width: 40px;
+        margin-top:5px;
+        border-radius: 5px;
+        height: 40px;
+        text-align: center;
+        background-color: #fff;
+        line-height: 48px;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+        display: block;
+    }
+    h2{
+        font-size: 18px;
+    }
+    .profile span{
+        display: none;
+    }
+}

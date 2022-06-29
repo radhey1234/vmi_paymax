@@ -1,0 +1,595 @@
+<main>
+  <div class="main-container">
+    <div class="tab-container-main">
+      <mat-tab-group>
+        <mat-tab
+          label="Internal Salary "
+          *ngIf="package == 'premium' || package == 'enterprise'"
+        >
+          <div class="col-md-12">
+            <mat-card class="mt-3">
+              <h3>Salary Benchmarking Setting</h3>
+              <p>Select Parameter</p>
+              <div class="clearfix"></div>
+              <div class="col-md-3">
+                <div class="col-8">
+                  <p>Coma Ratio</p>
+                </div>
+                <div class="col-4">
+                  <mat-checkbox></mat-checkbox>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="col-8">
+                  <p>Range Penetration</p>
+                </div>
+                <div class="col-4">
+                  <mat-checkbox></mat-checkbox>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="col-8">
+                  <p>Percent Rank</p>
+                </div>
+                <div class="col-4">
+                  <mat-checkbox></mat-checkbox>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <p>Select Parameter</p>
+              <div class="col-md-4">
+                <div class="col-6">
+                  <p>
+                    Salary Positioning
+                    <a style="float: right;font-size:13px; color: #3a4666;"
+                      ><i
+                        class="material-icons"
+                        style="font-size:13px; color: #3a4666; padding-right: 5px;"
+                      >
+                        info</i
+                      ></a
+                    >
+                  </p>
+                </div>
+                <div class="col-6 height-mat">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Select</mat-label>
+                    <mat-select matNativeControl required>
+                      <mat-option value="">Select</mat-option>
+                      <mat-option value="">P10</mat-option>
+                      <mat-option value="">P25</mat-option>
+                      <mat-option value="">P50</mat-option>
+                      <mat-option value="">P75</mat-option>
+                      <mat-option value="">P90</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="col-6">
+                  <p>
+                    Peer Group By
+                    <a style="float: right;font-size:13px; color: #3a4666;"
+                      ><i
+                        class="material-icons"
+                        style="font-size:13px; color: #3a4666; padding-right: 5px;"
+                      >
+                        info</i
+                      ></a
+                    >
+                  </p>
+                </div>
+                <div class="col-6 height-mat">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Select</mat-label>
+                    <mat-select matNativeControl required>
+                      <mat-option value="">Select</mat-option>
+                      <mat-option value="">Grade</mat-option>
+                      <mat-option value="">Designation</mat-option>
+                      <mat-option value="">Department</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-4 ">
+                <div class="col-6">
+                  <p>
+                    Sub Peer Group By
+                    <a style="float: right;font-size:13px; color: #3a4666;"
+                      ><i
+                        class="material-icons"
+                        style="font-size:13px; color: #3a4666; padding-right: 5px;"
+                      >
+                        info</i
+                      ></a
+                    >
+                  </p>
+                </div>
+                <div class="col-6 height-mat">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Select</mat-label>
+                    <mat-select matNativeControl required>
+                      <mat-option value="">Grade</mat-option>
+                      <mat-option value="">Designation</mat-option>
+                      <mat-option value="">Department</mat-option>
+                      <mat-option value="">Location</mat-option>
+                      <mat-option value="">Band</mat-option>
+                      <mat-option value="">Sub Department</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </mat-card>
+            <mat-card class="mt-3">
+              <div class="col-md-4">
+                <div class="filter-list height-mat">
+                  <mat-form-field appearance="outline">
+                    <!-- <mat-label> Filter </mat-label> -->
+                    <input
+                      matInput
+                      (keyup)="applyFilter($event.target.value)"
+                      placeholder="Search by Employee Name or Code"
+                    />
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="mat-elevation-z8 table-container BenchMarking">
+                <table
+                  mat-table
+                  [dataSource]="dataInterSalaryBenchMarking"
+                  matSort
+                >
+                  <ng-container matColumnDef="employeecode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Employee Code
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      <a (click)="internalSalarySubPeerGroupPopup()">{{
+                        row.employeecode
+                      }}</a>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Name
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.name }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="grade">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Grade
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.grade }}</td>
+                  </ng-container>
+
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Rating
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.rating }}</td>
+                  </ng-container>
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Department
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.department }}</td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="currentsalary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Current salary
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.currentsalary }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="benchmarksalary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Banchmark salary
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.benchmarksalary }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="comparatio">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Compa Ratio
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.comparatio }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="percentrank">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Percent Rank
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.percentrank }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="rangepenetration">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Range Penetration
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.rangepenetration }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="
+                      displayedColumnsInternalSalaryBenchmarking
+                    "
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: displayedColumnsInternalSalaryBenchmarking
+                    "
+                  ></tr>
+                </table>
+
+                <mat-paginator
+                  [pageSizeOptions]="[5, 10, 25, 100]"
+                ></mat-paginator>
+              </div>
+            </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab label="External Salary" *ngIf="package == 'enterprise'">
+          <div class="col-md-12">
+            <mat-card class="mt-3">
+              <h3>Market Benchmarking</h3>
+              <div class="col-md-4">
+                <div class="col-6">
+                  <p>Upload Market Data</p>
+                </div>
+                <div class="col-6">
+                  <div class="upload">
+                    <img src="assets/images/upload.png" />
+                    Upload
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <table
+                mat-table
+                [dataSource]="dataMarketData"
+                class="mat-elevation-z8"
+              >
+                <!-- Position Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span>File Name</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Date <span>Uploaded Date</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>Action</th>
+                  <td class="text-center" mat-cell *matCellDef="let element">
+                    <a style="padding: 10px 5px;" href=""
+                      ><i class="material-icons"
+                        ><img src="assets/images/eyes.png" /> </i
+                    ></a>
+
+                    <a
+                      style="padding: 10px 5px;"
+                      (click)="editMarketDataPopup()"
+                      ><i class="material-icons"
+                        ><img src="assets/images/edit.png" /> </i
+                    ></a>
+
+                    <a style="padding: 10px 5px;" href=""
+                      ><i class="material-icons"
+                        ><img src="assets/images/del.png" /> </i
+                    ></a>
+                  </td>
+                </ng-container>
+
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumnsMarketData"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumnsMarketData"
+                ></tr>
+              </table>
+
+              <div class="clearfix"></div>
+            </mat-card>
+            <mat-card class="mt-3">
+              <div class="col-md-4">
+                <div class="col-6">
+                  <p>Data using file</p>
+                </div>
+                <div class="col-6 height-mat">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Select</mat-label>
+                    <mat-select matNativeControl required>
+                      <mat-option value="">Select</mat-option>
+                      <mat-option value="">Market Data 1.xlsx</mat-option>
+                      <mat-option value="">Market Data 2.xlsx</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </mat-card>
+            <mat-card class="mt-3">
+              <form [formGroup]="benchmarkRulesForm">
+                <div
+                  formArrayName="rules"
+                  *ngFor="let rule of rules.controls; let i = index"
+                >
+                  <div [formGroupName]="i">
+                    <div class="clearfix"></div>
+                    <div class="col-md-4-1 ">
+                      <div class="col-md-5 m-0">
+                        <p class="font-size15">Criteria</p>
+                      </div>
+                      <div class="col-md-7 m-0 height-mat">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                        >
+                          <mat-label>Select</mat-label>
+                          <mat-select required formControlName="criteria">
+                            <mat-option selected disabled>Select</mat-option>
+                            <mat-option value="saab">Grade</mat-option>
+                            <mat-option value="mercedes"
+                              >Designation</mat-option
+                            >
+                            <mat-option value="audi">Department</mat-option>
+                            <mat-option value="audi">Location</mat-option>
+                            <mat-option value="audi">Band</mat-option>
+                            <mat-option value="audi">Sub Department</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4-1 ">
+                      <div class="col-md-5 m-0">
+                        <p class="font-size15">Condition</p>
+                      </div>
+                      <div class="col-md-7 m-0 height-mat">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 100%;"
+                        >
+                          <mat-label>Select</mat-label>
+                          <mat-select required formControlName="condition">
+                            <mat-option selected disabled>Select</mat-option>
+                            <mat-option>=</mat-option>
+                            <mat-option>></mat-option>
+                            <mat-option> < </mat-option>
+                            <mat-option>>=</mat-option>
+                            <mat-option> <= </mat-option>
+                            <mat-option>Contains</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4-1">
+                      <div class="col-md-5 m-0">
+                        <p class="font-size15">Value</p>
+                      </div>
+                      <div class="col-md-7 m-0 height-mat">
+                        <mat-form-field
+                          appearance="outline"
+                          style="width: 90%; float: left;"
+                        >
+                          <mat-label>Select</mat-label>
+                          <mat-select required formControlName="value">
+                            <mat-option selected disabled>Select</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <button
+                          *ngIf="i != 0"
+                          style="background-color: transparent; float: right; width: auto; border: 0px;margin-top: 17px;
+                      margin-right: -10px"
+                          (click)="removebenchmarkRules(i)"
+                        >
+                          X
+                        </button>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="clearfix"></div>
+              <div class="col-md-6" style="width: 50%; float: left;">
+                <button
+                  mat-button
+                  style="color:#3A4666;"
+                  (click)="addbenchmarkRules()"
+                  type="button"
+                >
+                  Add +
+                </button>
+              </div>
+
+              <div class="col-md-6" style="width: 50%; float: right;">
+                <button style="float: right;" mat-raised-button color="primary">
+                  Load
+                </button>
+              </div>
+              <div class="clearfix"></div>
+              <div class="mat-elevation-z8 table-container mt-3 mb-2">
+                <table
+                  mat-table
+                  [dataSource]="dataExterSalaryBenchMarking"
+                  matSort
+                >
+                  <!-- ID Column -->
+                  <ng-container matColumnDef="employeecode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Employee Code
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      
+                      <a routerLink="peer-group">{{ row.employeecode }}</a>
+                    </td>
+                  </ng-container>
+
+                  <!-- ID Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Name
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                       {{ row.name }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="grade">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Grade
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.grade }}</td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Rating
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.rating }}</td>
+                  </ng-container>
+
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Department
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.department }}</td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="currentsalary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Current Sallary
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.currentsalary }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="benchmarksalary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Benchmark Salary
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.benchmarksalary }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="comparatio">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Compa Ratio
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.comparatio }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="marketdata1">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Market Data 1
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.marketdata1 }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="marketratio1">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Market Ratio 1
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.marketratio1 }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="marketdata2">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Market Data 2
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.marketdata2 }}
+                    </td>
+                  </ng-container>
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="marketratio2">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Market Ratio 2
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.marketratio2 }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="marketcorrectioninput">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Market Correction Input
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      <a (click)="editMarketCorrectionInputPopup()">{{
+                        row.marketcorrectioninput
+                      }}</a>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="
+                      displayedColumnsExternalSalaryBenchmarking
+                    "
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: displayedColumnsExternalSalaryBenchmarking
+                    "
+                  ></tr>
+                </table>
+
+                <mat-paginator
+                  [pageSizeOptions]="[5, 10, 25, 100]"
+                ></mat-paginator>
+              </div>
+            </mat-card>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</main>

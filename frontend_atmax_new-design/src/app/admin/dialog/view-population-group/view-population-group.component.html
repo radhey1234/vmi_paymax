@@ -1,0 +1,143 @@
+<h1 mat-dialog-title>View Population Group</h1>
+<div mat-dialog-content>
+  <form [formGroup]="populationSelectionGridRulesForm">
+    <h3>Population Selection for the Grid</h3>
+    <div
+      formArrayName="rulesgrid"
+      *ngFor="let rule of rulesgrid.controls; let i = index"
+    >
+      <div class="form-dec" [formGroupName]="i">
+        <div class="col-md-4-1 ">
+          <div class="col-md-5">
+            <p class="font-size15">Criteria</p>
+          </div>
+          <div class="col-md-7">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Select</mat-label>
+              <mat-select
+                matNativeControl
+                required
+                formControlName="criteria"
+                [disabled]="true"
+              >
+                <ng-container *ngFor="let item of criteriaDataListOption">
+                  <mat-option value="{{ item.key }}">{{
+                    item.value
+                  }}</mat-option>
+                </ng-container>
+              </mat-select>
+
+              <mat-error
+                *ngIf="
+                  rulesgrid.controls[i].get('criteria').hasError('required')
+                "
+                >Criteria is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="col-md-4-1 ">
+          <div class="col-md-5">
+            <p class="font-size15">Condition</p>
+          </div>
+          <div class="col-md-7">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-select
+                required
+                formControlName="condition"
+                [disabled]="true"
+              >
+                <mat-option selected disabled>Select</mat-option>
+                <mat-option value="=">=</mat-option>
+                <mat-option value=">">></mat-option>
+                <mat-option value="<">< </mat-option>
+                <mat-option value=">=">>=</mat-option>
+                <mat-option value="<="><= </mat-option>
+                <mat-option value="Contains">Contains</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  rulesgrid.controls[i].get('condition').hasError('required')
+                "
+                >Condition is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="col-md-4-1">
+          <div class="col-md-5">
+            <p class="font-size15">Value</p>
+          </div>
+          <!-- -->
+
+          <div class="col-md-7">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Select</mat-label>
+              <mat-select
+                required
+                formControlName="value"
+                (click)="populationCriteriaValueChange(i)"
+                [disabled]="true"
+              >
+                <!-- <ng-container *ngIf="populationSelectionValue[i]"> -->
+                <ng-container *ngFor="let item of populationSelectionValue[i]">
+                  <mat-option value="{{ item }}">{{ item }}</mat-option>
+                </ng-container>
+                <!-- </ng-container> -->
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  rulesgrid.controls[i].get('condition').hasError('required')
+                "
+                >Value is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <!-- <button
+        mat-button
+        style="color:#3A4666;"
+        (click)="addPopulationSelectionGridRules()"
+        type="button"
+      >
+        Add +
+      </button> -->
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6 ">
+      <div class="col-md-6 m-0">
+        <p class="font-size15">Name The Selected population</p>
+      </div>
+      <div class="col-md-6 m-0">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <input
+            matInput
+            placeholder=""
+            formControlName="selectedPopulation"
+            id="selectedPopulation"
+            disabled
+          />
+        </mat-form-field>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="col-md-6"></div>
+    <div class="clearfix"></div>
+  </form>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button class="" style="float: right;" mat-button [mat-dialog-close]="true">
+      Cancel
+    </button>
+  </div>
+</div>

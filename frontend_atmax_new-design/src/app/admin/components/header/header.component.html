@@ -1,0 +1,52 @@
+<header>
+  <div class="header-col-1 d-none">
+    <a
+      style="float: left;"
+      *ngIf="sidebarService.backbutton"
+      routerLink="{{ sidebarService.backlink }}"
+    >
+      <img src="assets/images/back.png" />
+    </a>
+    <h2 class="text-center"></h2>
+  </div>
+  <div class="header-col-1 head-col-m">
+    <h2 class="text-center">{{ sidebarService.header }}</h2>
+  </div>
+  <div class="header-col-1 head-col-m-1">
+    <div class="nav-icon">
+      <i
+        class="material-icons"
+        style="cursor: pointer;"
+        (click)="toggleSidebar()"
+      >
+        menu
+      </i>
+    </div>
+    <div class="profile">
+      <button mat-button [matMenuTriggerFor]="menu">
+        <img src="assets/images/demo.jpg" />
+        <span>{{ name$ | async }}</span>
+        <i class="material-icons">
+          expand_more
+        </i>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button class="min-width" mat-menu-item>Profile</button>
+        <button class="min-width" mat-menu-item (click)="logout()">
+          Logout
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="notification">
+      <i class="material-icons">
+        notifications
+      </i>
+      <div class="notification-item">
+        2
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</header>
+<div class="clearfix"></div>

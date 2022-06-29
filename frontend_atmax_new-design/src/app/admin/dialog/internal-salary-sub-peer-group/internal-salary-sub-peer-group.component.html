@@ -1,0 +1,99 @@
+<h3 style="float: left; width: auto;" mat-dialog-title>Sub Peer Group</h3>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button class="cancel-pop" style="float: right; border:0px; margin-top: -5px;" [mat-dialog-close]="true" cdkFocusInitial>
+      <i class="material-icons" style="font-size: 35px;">
+        close
+        </i>
+    </button>
+  </div>
+</div>
+
+<table mat-table [dataSource]="dataInterSalaryBenchMarking" matSort>
+  <ng-container matColumnDef="employeecode">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Empoyee Code
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <a>{{ row.employeecode }}</a>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let row">
+      <i class="material-icons"></i> {{ row.name }}
+    </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="grade">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Grade</th>
+    <td mat-cell *matCellDef="let row">{{ row.grade }}</td>
+  </ng-container>
+
+  <!-- Color Column -->
+  <ng-container matColumnDef="rating">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Rating
+    </th>
+    <td mat-cell *matCellDef="let row">{{ row.rating }}</td>
+  </ng-container>
+  <!-- Progress Column -->
+  <ng-container matColumnDef="department">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Department
+    </th>
+    <td mat-cell *matCellDef="let row">{{ row.department }}</td>
+  </ng-container>
+  <!-- Color Column -->
+  <ng-container matColumnDef="currentsalary">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Current Sallery
+    </th>
+    <td mat-cell *matCellDef="let row">{{ row.currentsalary }}</td>
+  </ng-container>
+  <!-- Color Column -->
+  <ng-container matColumnDef="benchmarksalary">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Banchmark Sallery
+    </th>
+    <td mat-cell *matCellDef="let row">
+      {{ row.benchmarksalary }}
+    </td>
+  </ng-container>
+  <!-- Color Column -->
+  <ng-container matColumnDef="comparatio">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Compa Ratio
+    </th>
+    <td mat-cell *matCellDef="let row">
+      {{ row.comparatio }}
+    </td>
+  </ng-container>
+  <!-- Color Column -->
+  <ng-container matColumnDef="percentrank">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Percent Rank
+    </th>
+    <td mat-cell *matCellDef="let row">{{ row.percentrank }}</td>
+  </ng-container>
+  <!-- Color Column -->
+  <ng-container matColumnDef="rangepenetration">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Range Penetration
+    </th>
+    <td mat-cell *matCellDef="let row">
+      {{ row.rangepenetration }}
+    </td>
+  </ng-container>
+  <!-- Color Column -->
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="displayedColumnsInternalSalaryBenchmarking"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumnsInternalSalaryBenchmarking"
+  ></tr>
+</table>

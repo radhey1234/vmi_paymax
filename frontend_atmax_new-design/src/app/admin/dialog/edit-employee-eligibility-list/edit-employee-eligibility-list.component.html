@@ -1,0 +1,200 @@
+<h1 mat-dialog-title>Edit Employee Eligibility Group</h1>
+<div mat-dialog-content>
+  <form
+    [formGroup]="empeligibilityRulesForm"
+    (ngSubmit)="editEmployeeEligibilityRulesForm()"
+  >
+    <h3>Population Selection for the Grid</h3>
+    <div class="col-md-12">
+      <div class="form-dec">
+        <div class="col-md-4-1">
+          <div class="col-md-5">
+            <p class="font-size15">Plan Name</p>
+          </div>
+          <div class="col-md-7 m-0">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Select</mat-label>
+              <mat-select required formControlName="planName">
+                <mat-option
+                  *ngFor="let item of planEligibilityData$ | async"
+                  value="{{ item.id }}"
+                  >{{ item.planName }}</mat-option
+                >
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  empeligibilityRulesForm.controls.planName.errors?.required
+                "
+                >Plan name is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="clearfix"></div>
+
+    <div
+      formArrayName="rulesgrid"
+      *ngFor="let rule of rulesgrid.controls; let i = index"
+    >
+      <div class="form-dec" [formGroupName]="i">
+        <div class="col-md-4-1 ">
+          <div class="col-md-5">
+            <p class="font-size15">Criteria</p>
+          </div>
+          <div class="col-md-7">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Select</mat-label>
+              <mat-select
+                matNativeControl
+                required
+                formControlName="criteria"
+                (selectionChange)="populationCriteriaSelectionChange(i)"
+              >
+                <ng-container *ngFor="let item of criteriaDataListOption">
+                  <mat-option value="{{ item.key }}">{{
+                    item.value
+                  }}</mat-option>
+                </ng-container>
+              </mat-select>
+
+              <mat-error
+                *ngIf="
+                  rulesgrid.controls[i].get('criteria').hasError('required')
+                "
+                >Criteria is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="col-md-4-1 ">
+          <div class="col-md-5">
+            <p class="font-size15">Condition</p>
+          </div>
+          <div class="col-md-7">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-select required formControlName="condition">
+                <mat-option selected disabled>Select</mat-option>
+                <mat-option value="=">=</mat-option>
+                <mat-option value=">">></mat-option>
+                <mat-option value="<">< </mat-option>
+                <mat-option value=">=">>=</mat-option>
+                <mat-option value="<="><= </mat-option>
+                <mat-option value="Contains">Contains</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  rulesgrid.controls[i].get('condition').hasError('required')
+                "
+                >Condition is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="col-md-4-1">
+          <div class="col-md-5">
+            <p class="font-size15">Value</p>
+          </div>
+          <!-- -->
+
+          <div class="col-md-7">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Select</mat-label>
+              <mat-select
+                required
+                formControlName="value"
+                (click)="populationCriteriaValueChange(i)"
+              >
+                <!-- <ng-container *ngIf="populationSelectionValue[i]"> -->
+                <ng-container *ngFor="let item of populationSelectionValue[i]">
+                  <mat-option value="{{ item }}">{{ item }}</mat-option>
+                </ng-container>
+                <!-- </ng-container> -->
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  rulesgrid.controls[i].get('condition').hasError('required')
+                "
+                >Value is required</mat-error
+              >
+            </mat-form-field>
+            <button
+              *ngIf="i != 0"
+              style="background-color: transparent; float: left; width: auto; border: 0px;margin-top: 17px;
+         margin-right: -10px"
+              (click)="removePopulationSelectionGridRules(i)"
+            >
+              X
+            </button>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <button
+        mat-button
+        style="color:#3A4666;"
+        (click)="addPopulationSelectionGridRules()"
+        type="button"
+      >
+        Add +
+      </button>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6 ">
+      <div class="col-md-6 m-0">
+        <p class="font-size15">Save selected eligibility as</p>
+      </div>
+      <div class="col-md-6 m-0">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <input
+            matInput
+            placeholder=""
+            formControlName="saveEliigibilityName"
+            id="selectedPopulation"
+          />
+        </mat-form-field>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="col-md-6">
+      <button
+        style="display: none; float: right;"
+        id="saveForm"
+        mat-raised-button
+        color="primary"
+      >
+        Save
+      </button>
+    </div>
+    <div class="clearfix"></div>
+  </form>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button
+      style="float: right;"
+      mat-raised-button
+      color="primary"
+      id="edit"
+      cdkFocusInitial
+      [disabled]="getEmployeeEligibilityEditState$ | async"
+      (click)="saveBtn()"
+    >
+      <span *ngIf="getEmployeeEligibilityEditState$ | async">Saving</span>
+      <span *ngIf="!(getEmployeeEligibilityEditState$ | async)">Save</span>
+    </button>
+    <button class="" style="float: right;" mat-button [mat-dialog-close]="true">
+      Cancel
+    </button>
+  </div>
+</div>

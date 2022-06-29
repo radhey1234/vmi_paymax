@@ -1,0 +1,96 @@
+<h1 mat-dialog-title>Edit Formula Setting</h1>
+
+<div mat-dialog-content>
+  <div class="col-md-12">
+    <form
+      [formGroup]="formulaSettingRulesForm"
+      (ngSubmit)="formulaSettingSave()"
+      #formulaSettingForm="ngForm"
+    >
+      <div class="clearfix"></div>
+      <div class="col-md-12 ">
+        <div class="col-md-6 m-0">
+          <p class="font-size15">Formula Linking Matrix</p>
+        </div>
+        <div class="col-md-6 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <input
+              matInput
+              formControlName="formulaLinkingMatrix"
+              placeholder="0.5* Rating Vs Grade +1*Promotion "
+            />
+            <mat-error
+              *ngIf="
+                formulaSettingRulesForm.controls.formulaLinkingMatrix.errors
+                  ?.required
+              "
+            >
+              Formula Linking Matrix is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="col-md-12 ">
+        <div class="col-md-6 m-0">
+          <p class="font-size15">Saved Formula as</p>
+        </div>
+        <div class="col-md-6 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <input
+              matInput
+              formControlName="saveFormulaAs"
+              placeholder="Merit Increase_New BU "
+            />
+            <!-- <mat-error
+                        *ngIf="
+                          formulaSettingRulesForm.get('')
+                        "
+                      >
+                        Saved Formula is required
+                      </mat-error> -->
+            <mat-error
+              *ngIf="
+                formulaSettingRulesForm.controls.saveFormulaAs.errors?.required
+              "
+            >
+              Saved Formula is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="col-md-6">
+        <button
+          style="float: right; display: none;"
+          mat-raised-button
+          color="primary"
+          id="saveForm"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+    <div class="clearfix"></div>
+
+    <div class="clearfix"></div>
+  </div>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button
+      style="float: right;"
+      mat-raised-button
+      color="primary"
+      id="edit"
+      cdkFocusInitial
+      (click)="saveBtn()"
+    >
+      Save
+    </button>
+    <button class="" style="float: right;" mat-button [mat-dialog-close]="true">
+      Cancel
+    </button>
+  </div>
+</div>

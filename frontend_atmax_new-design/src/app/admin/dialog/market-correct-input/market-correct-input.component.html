@@ -1,0 +1,70 @@
+<h3 mat-dialog-title>Market Correction Input</h3>
+<div mat-dialog-content>
+  <div class="col-md-4">
+    <p>Current Salary</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Current Salary" value="7,27,834" />
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-4">
+    <p>Internal Benchmark Salary</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        placeholder="Internal Benchmark Salary"
+        value="8,01,965"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-4">
+    <p>Market Benchmark Salary</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Market Benchmark Salary" value="9,32,341" />
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-4">
+    <p>Market Correction %</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Market Correction %" value="20" />
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-4">
+    <p>Suggested Salary</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Suggested Salary" value="8,73,203" />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <p>Comments</p>
+  </div>
+  <div class="col-md-4">
+    <textarea placeholder="Comments" rows="5">
+Has outside offer,
+important resource</textarea
+    >
+  </div>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button class="submit" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      SAVE
+    </button>
+    <button class="cancel" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      Cancel
+    </button>
+  </div>
+</div>

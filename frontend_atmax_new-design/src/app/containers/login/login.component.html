@@ -1,0 +1,37 @@
+<div class="login-body">
+  <div class="logo">
+    <img src="assets/images/logo.png" />
+  </div>
+  <div class="container">
+    <div class="login-card">
+      <h3 class="text-center">Login</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Username </mat-label>
+        <input matInput [(ngModel)]="email" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password </mat-label>
+        <input matInput type="password" [(ngModel)]="password" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label><strong>Select Package</strong></mat-label>
+        <mat-select matNativeControl required [(ngModel)]="package_emp">
+          <mat-option value="essentials">Essentials</mat-option>
+          <mat-option value="premium">Premium</mat-option>
+          <mat-option value="enterprise">Enterprise</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- <a
+        style="padding: 10px 5px;"
+        download
+        target="_self"
+        href="https://i.picsum.photos/id/320/536/354.jpg"
+        ><i class="material-icons"><img src="assets/images/down.png" /> </i
+      ></a> -->
+      <button (click)="login('employee', '/dashboard')" mat-button>
+        Login
+      </button>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

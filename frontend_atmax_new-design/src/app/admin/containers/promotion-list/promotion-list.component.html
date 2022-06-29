@@ -1,0 +1,102 @@
+<main>
+    <div class="main-container">
+        <mat-card  class="mt-2">
+            <h3>List of Eligibles Togged For Promotion</h3>
+            <div class="col-md-6 height-ta">
+              <mat-form-field  appearance="outline" style="width: 60%; float: left;">
+                <mat-label>Select an option</mat-label>
+                <mat-select [(value)]="selected">
+                  <mat-option>None</mat-option>
+                  <mat-option value="option1">Option 1</mat-option>
+                  <mat-option value="option2">Option 2</mat-option>
+                  <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <div class="filter-list height-mat " style="float: right; width: 60%;">
+                <mat-form-field appearance="outline">
+                  <!-- <mat-label> Filter </mat-label> -->
+                  <input
+                    matInput
+                    placeholder="Search by Employee Name or Code"
+                  />
+                  <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="mat-elevation-z8 table-container team-tabl">
+            <table mat-table [dataSource]="dataSource103" matSort class="mat-elevation-z8">
+        
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+            
+              <!-- Weight Column -->
+              <ng-container matColumnDef="employee">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Code</th>
+                <td mat-cell *matCellDef="let element"> {{element.employee}} </td>
+              </ng-container>
+            
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="grade">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Grade </th>
+                <td mat-cell *matCellDef="let element"> {{element.grade}} </td>
+              </ng-container>
+              <ng-container matColumnDef="Rating">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rating </th>
+                <td mat-cell *matCellDef="let element"> {{element.Rating}} </td>
+              </ng-container>
+              <ng-container matColumnDef="department">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
+                <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+              </ng-container>
+              <ng-container matColumnDef="currentsalary">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Salary </th>
+                <td mat-cell *matCellDef="let element"> {{element.currentsalary}} </td>
+              </ng-container>
+              <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+                <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+              </ng-container>
+              <ng-container matColumnDef="promotion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Promotion Input</th>
+                <td mat-cell *matCellDef="let element"> 
+                  <!-- {{element.promotion}} -->
+                  <mat-checkbox> </mat-checkbox>
+                 </td>
+              </ng-container>
+              <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> delete </th>
+                <td mat-cell *matCellDef="let element"> 
+                  <!-- {{element.delete}}  -->
+                  <mat-checkbox> </mat-checkbox>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="comment">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Comments </th>
+                <td mat-cell *matCellDef="let element"> 
+                  <!-- {{element.comment}}  -->
+                  <mat-form-field appearance="outline">
+                   
+                    <input matInput  />
+                  </mat-form-field>
+                </td>
+              </ng-container>
+            
+            
+              <tr mat-header-row *matHeaderRowDef="vadisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: vadisplayedColumns;"></tr>
+            </table>
+          </div>
+          <div class="clearfix"></div>
+          <button class="salary-down-btn" style="margin-top:15px; float: left;">ADD TO LIST</button>
+          <button class="salary-down-btn" style="margin-top:15px">CONFIRM THE LIST</button>
+          <button class="salary-down-btn" style="margin: 15px 10px;">SAVE</button>
+          <div class="clearfix"></div>
+          </mat-card>
+    </div>
+</main>

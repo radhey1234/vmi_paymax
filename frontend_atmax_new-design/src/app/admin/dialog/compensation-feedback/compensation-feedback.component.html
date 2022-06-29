@@ -1,0 +1,89 @@
+<h1 mat-dialog-title>Compensation Feedback</h1>
+<div mat-dialog-content>
+  <div class="col-md-4">
+    <p>Available Budget</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Placeholder" value="-250,000" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <p>Utilized Budget</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Placeholder" value="5250000" disabled />
+    </mat-form-field>
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-md-4">
+    <p>Allocated Budget</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Placeholder" value="50,000,000" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <p>Suggested Increment %</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Placeholder" value="2" disabled />
+    </mat-form-field>
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-md-4">
+    <p>Increment Amount</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Placeholder" value="24,634" />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <p>Correction %</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Placeholder" value="0" />
+    </mat-form-field>
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-md-4">
+    <p>Revised Salary</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Placeholder" value="2,488,071" />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <p style="margin-top: 5px;">Promotion Recommendation</p>
+  </div>
+  <div class="col-md-4">
+    <div style="padding-top: 7px;">
+      <mat-checkbox [checked]="true"></mat-checkbox>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-md-4">
+    <p>Comments</p>
+  </div>
+  <div class="col-md-8">
+    <textarea rows="3" placeholder="">
+Highly paid and hence no business correction required.</textarea
+    >
+  </div>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button class="submit" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      Submit
+    </button>
+    <button class="cancel" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      Cancel
+    </button>
+  </div>
+</div>

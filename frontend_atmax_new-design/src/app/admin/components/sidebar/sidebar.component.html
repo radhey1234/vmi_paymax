@@ -1,0 +1,92 @@
+<nav *ngIf="sidebarToggle">
+  <div class="logo">
+    <a routerLink="dashboard">
+      <img src="assets/images/logo.png" width="100%" />
+    </a>
+  </div>
+  <ul>
+    <ng-scrollbar class="virtual-scroll" thumbClass="white-scrollbars">
+      <cdk-virtual-scroll-viewport scrollViewport itemSize="50" class="example-viewport">
+    <li routerLinkActive="active">
+      <a (click)="hide()" routerLink="dashboard">
+        <i class="material-icons"><img src="assets/images/group-1.png"/></i>
+        Dash Board
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a (click)="hide()" routerLink="salary-structure">
+        <i class="material-icons"><img src="assets/images/Group-71.png"/></i>
+        Salary Structure
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a
+        (click)="hide()"
+        routerLink="team-snapshot"
+        *ngIf="package == 'premium' || package == 'enterprise'"
+      >
+        <i class="material-icons"><img src="assets/images/bar-chart-1.png"/></i>
+        Team Snapshot
+      </a>
+    </li>
+    <li routerLinkActive="active ">
+      <a (click)="hide()" routerLink="team">
+        <i class="material-icons"><img src="assets/images/group.png"/></i>
+        Team
+      </a>
+    </li>
+    <li routerLinkActive="active ">
+      <a (click)="hide()" routerLink="promotion-list">
+        <i class="material-icons"><img src="assets/images/group.png"/></i>
+        Promotion List
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a (click)="hide()" routerLink="process">
+        <i class="material-icons"><img src="assets/images/folder-1.png"/></i>
+        Process
+      </a>
+    </li>
+    <li
+      routerLinkActive="active"
+      *ngIf="package == 'premium' || package == 'enterprise'"
+    >
+      <a (click)="hide()" routerLink="analytics">
+        <i class="material-icons"><img src="assets/images/analytic.png"/></i>
+        Analytics
+      </a>
+    </li>
+    <li
+      routerLinkActive="active"
+      *ngIf="package == 'premium' || package == 'enterprise'"
+    >
+      <a (click)="hide()" routerLink="bench-marking">
+        <i class="material-icons"><img src="assets/images/libra.png"/></i>
+        Benchmarking
+      </a>
+    </li>
+    <li
+      routerLinkActive="active"
+      *ngIf="package == 'premium' || package == 'enterprise'"
+    >
+      <a (click)="hide()" routerLink="budgeting">
+        <i class="material-icons"><img src="assets/images/budget.png"/></i>
+        Budgeting
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a (click)="hide()" routerLink="reporting">
+        <i class="material-icons"><img src="assets/images/Group-3.png"/></i>
+        Reporting
+      </a>
+    </li>
+   
+  </cdk-virtual-scroll-viewport>
+</ng-scrollbar>
+  </ul>
+</nav>
+<div
+  class="overlay"
+  *ngIf="sidebarToggle"
+  (click)="sidebarService.toggleSidebar.emit()"
+></div>

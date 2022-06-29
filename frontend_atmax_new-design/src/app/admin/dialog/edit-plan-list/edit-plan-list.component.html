@@ -1,0 +1,178 @@
+<h1 mat-dialog-title>Edit Plan List</h1>
+<div mat-dialog-content>
+  <form [formGroup]="planCreationRulesForm">
+    <div class="col-md-6 ">
+      <div class="col-md-5 m-0">
+        <p class="font-size15">Process applicable</p>
+      </div>
+      <div class="col-md-7 m-0">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>Select</mat-label>
+          <mat-select matNativeControl formControlName="processApplicable">
+            <mat-option value="Merit Increase">Merit Increase</mat-option>
+            <mat-option value="Promotion">Promotion</mat-option>
+            <mat-option value="Bonus">Bonus</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              planCreationRulesForm.controls.processApplicable.errors?.required
+            "
+            >Process applicable is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="col-md-6 ">
+      <div class="col-md-5 m-0">
+        <p class="font-size15">Plan Name</p>
+      </div>
+      <div class="col-md-7 m-0">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <input matInput placeholder="" formControlName="planName" />
+          <mat-error
+            *ngIf="planCreationRulesForm.controls.planName.errors?.required"
+            >Planame is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="col-md-6 ">
+      <div class="col-md-4">
+        <p>Plan Period</p>
+      </div>
+      <div class="col-md-8 m-0 date-picker-p">
+        <mat-form-field appearance="outline" style="width: 40%; float: left;">
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            formControlName="planPeriodFrom"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error
+            *ngIf="
+              planCreationRulesForm.controls.planPeriodFrom.errors?.required
+            "
+            >Plan Period Form is required</mat-error
+          >
+        </mat-form-field>
+
+        <span style="float: left; width: auto;padding: 15px 10px;">-</span>
+        <mat-form-field appearance="outline" style="width: 40%; float: left;">
+          <input
+            matInput
+            [matDatepicker]="picker2"
+            formControlName="planPeriodTo"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+          <mat-error
+            *ngIf="planCreationRulesForm.controls.planPeriodTo.errors?.required"
+            >Plan period to is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6 ">
+      <div class="col-md-5">
+        <p>Aplicable Calender</p>
+      </div>
+      <div class="col-md-7 m-0 date-picker-p">
+        <mat-form-field appearance="outline" style="width: 40%; float: left;">
+          <input
+            matInput
+            [matDatepicker]="picker3"
+            formControlName="applicableCalenderFrom"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker3"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+          <mat-error
+            *ngIf="
+              planCreationRulesForm.controls.applicableCalenderFrom.errors
+                ?.required
+            "
+            >Applicable Calender Form is required</mat-error
+          >
+        </mat-form-field>
+
+        <span style="float: left; width: auto;padding: 15px 10px;">-</span>
+        <mat-form-field appearance="outline" style="width: 40%; float: left;">
+          <input
+            matInput
+            [matDatepicker]="matApplicableCalenderTo"
+            formControlName="applicableCalenderTo"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="matApplicableCalenderTo"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #matApplicableCalenderTo></mat-datepicker>
+          <mat-error
+            *ngIf="
+              planCreationRulesForm.controls.applicableCalenderTo.errors
+                ?.required
+            "
+            >Applicable Calender To is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6 date-picker-p">
+      <div class="col-md-5">
+        <p>Effective date</p>
+      </div>
+      <div class="col-md-7">
+        <mat-form-field appearance="outline" style="width: 40%; float: left;">
+          <input
+            matInput
+            [matDatepicker]="picker5"
+            formControlName="effectiveDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker5"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker5></mat-datepicker>
+          <mat-error
+            *ngIf="
+              planCreationRulesForm.controls.effectiveDate.errors?.required
+            "
+            >Effective Date is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </form>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button
+      style="float: right;"
+      mat-raised-button
+      color="primary"
+      id="edit"
+      [disabled]="disableSave"
+      (click)="editPlan($event)"
+      cdkFocusInitial
+    >
+      Save
+    </button>
+    <button class="" style="float: right;" mat-button [mat-dialog-close]="true">
+      Cancel
+    </button>
+  </div>
+</div>

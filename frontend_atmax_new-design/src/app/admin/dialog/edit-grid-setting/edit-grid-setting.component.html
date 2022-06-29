@@ -1,0 +1,150 @@
+<ngx-loading-bar [color]="'#FF795A'" [height]="'4px'"></ngx-loading-bar>
+<h1 mat-dialog-title>Edit Formula Setting</h1>
+
+<div mat-dialog-content>
+  <div class="col-md-12">
+    <form [formGroup]="gridSettingForm" (ngSubmit)="saveGridSetting()">
+      <div class="col-md-5-1">
+        <div class="col-md-5">
+          <p class="font-size15">X Axis</p>
+        </div>
+        <div class="col-md-7 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Select</mat-label>
+            <mat-select matNativeControl formControlName="xAxis" required>
+              <ng-container *ngFor="let item of gridAxisData | keyvalue">
+                <mat-option value="{{ item.value }}">{{
+                  item.value
+                }}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="gridSettingForm.controls.xAxis.errors?.required">
+              X Axis Value is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-5-1">
+        <div class="col-md-5">
+          <p class="font-size15">Y Axis</p>
+        </div>
+        <div class="col-md-7 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <!-- <input matInput placeholder="Compa ratio_all" /> -->
+            <mat-label>Select</mat-label>
+            <mat-select matNativeControl formControlName="yAxis" required>
+              <ng-container *ngFor="let item of gridAxisData | keyvalue">
+                <mat-option value="{{ item.value }}">{{
+                  item.value
+                }}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="gridSettingForm.controls.yAxis.errors?.required">
+              Y Axis Value is Required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="col-md-2">
+        <p class="font-size15"></p>
+      </div>
+      <div class="col-md-5-1">
+        <div class="col-md-5">
+          <p class="font-size15">Grid Result</p>
+        </div>
+        <div class="col-md-7 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <!-- <input matInput placeholder="% Increment" /> -->
+            <mat-label>Select</mat-label>
+            <mat-select matNativeControl formControlName="result" required>
+              <mat-option value=" % Increment"> % Increment</mat-option>
+              <mat-option value="Absolute Increment"
+                >Absolute Increment</mat-option
+              >
+            </mat-select>
+
+            <mat-error *ngIf="gridSettingForm.controls.result.errors?.required">
+              Grid Result is Required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-5-1">
+        <div class="col-md-5">
+          <p class="font-size15">Impact Filed</p>
+        </div>
+        <div class="col-md-7 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <!-- <input matInput placeholder="Fixed CTC" /> -->
+            <mat-label>Select</mat-label>
+            <mat-select matNativeControl required formControlName="impactField">
+              <mat-option value="Total CTC">Total CTC</mat-option>
+              <mat-option value="Fixed CTC ">Fixed CTC </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="gridSettingForm.controls.impactField.errors?.required"
+            >
+              Impacted Field is Required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="col-md-2">
+        <p class="font-size15"></p>
+      </div>
+      <div class="col-md-5-1">
+        <div class="col-md-5">
+          <p class="font-size15">Name Grid as</p>
+        </div>
+        <div class="col-md-7 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <input
+              matInput
+              placeholder="Compa ratio_all Vs Rating"
+              formControlName="name"
+            />
+            <mat-error *ngIf="gridSettingForm.controls.name.errors?.required">
+              Name Grid is Required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <p class="font-size15"></p>
+        <button
+          style="float: left; display: none;"
+          mat-raised-button
+          color="primary"
+          id="saveForm"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+    <div class="clearfix"></div>
+
+    <div class="clearfix"></div>
+  </div>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button
+      style="float: right;"
+      mat-raised-button
+      color="primary"
+      id="edit"
+      cdkFocusInitial
+      [disabled]="gridEditData$ | async"
+      (click)="saveBtn()"
+    >
+      <span *ngIf="gridEditData$ | async">Saving</span>
+      <span *ngIf="!(gridEditData$ | async)">Save</span>
+    </button>
+    <button class="" style="float: right;" mat-button [mat-dialog-close]="true">
+      Cancel
+    </button>
+  </div>
+</div>

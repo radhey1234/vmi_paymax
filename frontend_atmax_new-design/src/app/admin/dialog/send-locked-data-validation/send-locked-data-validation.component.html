@@ -1,0 +1,49 @@
+
+<h1 mat-dialog-title class="text-center">Send lock data for validation</h1>
+<div class="clearfix"></div>
+<div class="col-md-6">
+    <div class="col-md-5 m-0">
+      <p class="font-size15">Send data to</p>
+    </div>
+    <div class="col-md-7 m-0">
+      <mat-form-field appearance="outline" style="width: 50%; float: left;">
+        <mat-label>Select</mat-label>
+        <mat-select matNativeControl required formControlName="">
+          <mat-option value="Select"> Select</mat-option>
+          <mat-option value=""> Select</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div style="float: right; max-width: 105px; margin-right: 10px; margin-top:10px">
+        <button style="float: left; padding: 1px 35px;" mat-raised-button color="primary"> send </button>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="col-md-6 text-right">
+    <mat-checkbox>validation not required</mat-checkbox>
+      
+    </div> 
+    <div class="clearfix"></div>
+    <div class="col-md-6 mt-2">
+        <div class="col-md-7 m-0">
+          <p class="font-size15">Total no of send data validation</p>
+        </div>
+        <div class="col-md-5 m-0">
+         
+          <div style="float: right; max-width: 105px; margin-right: 10px; margin-top:10px">
+            <button style="float: left; padding: 1px 35px" mat-raised-button color="primary"> View </button>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="col-md-6 mt-2">
+        <div style="float: left; width: 100px; margin-left: 20px;">
+            <mat-form-field  appearance="outline" style="width: 100%;" >
+              <mat-label></mat-label>
+              <input matInput>
+            </mat-form-field>
+          </div>
+          <div style="float: right; max-width: 90px; margin-top:10px">
+            <button class="cancel-pop" style="float: right; padding: 1px 35px" mat-raised-button > Cancel </button>
+          </div>
+      </div>

@@ -1,0 +1,261 @@
+<!-- <h3 class="text-center">Custom Percentage Option</h3>
+<div mat-dialog-content>
+  <div class="row-center">
+  <div class="col-md-4">
+    <p>Loaded grid</p>
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Grade Vs Rating" value="" disabled />
+    </mat-form-field>
+  </div>
+</div>
+</div>
+
+<div class="responsive-table-new">
+  <table>
+    <thead>
+      <tr>
+        <th>
+          <span>  Grade</span>
+        </th>
+        <th>
+        <span>  Rating</span>
+          <table class="sub-table">
+            <tr>
+              <th></th>
+              <th>Poor</th>
+              <th>Average</th>
+              <th>Good</th>
+              <th>Excellent</th>
+            </tr>
+            <tr>
+              <td>
+                A
+              </td>
+              <td>
+               <span> 0.0%</span>
+              </td>
+              <td>
+                <span>  5.0%</span>
+              </td>
+              <td>
+                <span>  10.0%</span>
+              </td>
+              <td>
+                <span> 20.0%</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                B
+              </td>
+              <td>
+                <span>  0.0% </span>
+              </td>
+              <td>
+                <span>  4.0% </span>
+              </td>
+              <td>
+                <span>  8.0% </span>
+              </td>
+              <td>
+                <span>  8.0% </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                C
+              </td>
+              <td>
+                <span>   0.0% </span>
+              </td>
+              <td>
+                <span>   3.0% </span>
+              </td>
+              <td>
+                <span>  6.0% </span>
+              </td>
+              <td>
+                <span> 12.00% </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                D
+              </td>
+              <td>
+                <span>  0.0% </span>
+              </td>
+              <td>
+                <span>    2.0% </span>
+              </td>
+              <td>
+                <span> 4.0% </span>
+              </td>
+              <td>
+                <span>   8.0% </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                E
+              </td>
+              <td>
+                <span>   0.0% </span>
+              </td>
+              <td>
+                <span>   0.4% </span>
+              </td>
+              <td>
+                <span>   0.8% </span>
+              </td>
+              <td>
+                <span>   1.6% </span>
+              </td>
+            </tr>
+          </table>
+        </th>
+      </tr>
+    </thead>
+  </table>
+</div>
+
+<div>
+  <div class="col-md-8">
+  <div class="col-md-4">
+    <h4 style="color: #3f688d;">400,000,000</h4>
+    <p style="margin: 0px; padding-top:5px; color:#666;">Allocated Budget</p>
+    
+  </div>
+  <div class="col-md-4">
+    <h4 style="color: #2aabf1;">400,150,500</h4>
+   <p style="margin: 0px; padding-top:5px; color:#666;">Utilized Budget </p>
+  </div>
+  <div class="col-md-4">
+    <h4 style="color: #c5317b;">-150,500</h4>
+    <p style="margin: 0px; padding-top:5px; color:#666;">Available Budget </p>
+  </div>
+</div>
+  <div class="col-md-4">
+    <button
+      [mat-dialog-close]="true"
+      style="float: right; margin-right: 2px;"
+      class="save-pop"
+    >
+      Save
+    </button>
+    <button
+      [mat-dialog-close]="true"
+      style="float: right; margin-right: 10px;"
+      class="cancel-pop"
+    >
+      Cancel
+    </button>
+  </div>
+</div> -->
+
+<h3 class="text-center">Custom Percentage Option</h3>
+
+<div
+  class="wrapper"
+  *ngIf="(anchorDataLoaded$ | async) == true; else elseBlock"
+>
+  <div mat-dialog-content>
+    <div class="row-center">
+      <div class="col-md-4">
+        <p>Loaded grid</p>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            placeholder="{{ getAnchorPointData.yAxisLabel }} Vs {{
+              getAnchorPointData.xAxisLabel
+            }}"
+            value=""
+            disabled
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="responsive-table-new">
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <span> {{ getAnchorPointData.yAxisLabel }}</span>
+          </th>
+          <th
+            style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;"
+          ></th>
+          <th>
+            <span> {{ getAnchorPointData.xAxisLabel }}</span>
+            <table
+              class="sub-table"
+              style="border-left: 0px;border-right: 0px;"
+            >
+              <tr>
+                <th style="border:0px; border-right: 1px solid #ccc;"></th>
+              </tr>
+              <tr>
+                <th style="border:0px;border-right: 1px solid #ccc; "></th>
+                <th *ngFor="let item of getAnchorPointData['xAxis']">
+                  {{ item.value }}
+                </th>
+              </tr>
+
+              <tr
+                *ngFor="
+                  let item of getAnchorPointData['mapData'];
+                  let i = index
+                "
+              >
+                <td>{{ getAnchorPointData["yAxis"][i]["value"] }}</td>
+                <td *ngFor="let res of item">
+                  <input
+                    type="number"
+                    style="width: 50px;"
+                    value="{{ res.value }}"
+                    (change)="
+                      changeInput(mappingArrayIndex[i], res.sequence, $event)
+                    "
+                  />
+                  {{ getAnchorPointData["suffix"] }}
+                </td>
+              </tr>
+            </table>
+          </th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div>
+    <div class="col-md-4" style="float: right;">
+      <button
+        style="float: right; margin-right: 2px;"
+        class="save-pop"
+        [disabled]="getGridSettingPopupLoaded$ | async"
+        (click)="saveData()"
+      >
+        <!-- Save -->
+        <span *ngIf="getGridSettingPopupLoaded$ | async">Saving</span>
+        <span *ngIf="!(getGridSettingPopupLoaded$ | async)">Save</span>
+      </button>
+      <button
+        [mat-dialog-close]="true"
+        style="float: right; margin-right: 10px;"
+        class="cancel-pop"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #elseBlock>
+  Loading...
+</ng-template>

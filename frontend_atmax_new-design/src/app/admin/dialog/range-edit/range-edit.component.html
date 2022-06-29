@@ -1,0 +1,153 @@
+<h1 mat-dialog-title>Edit Range Creation</h1>
+
+<div mat-dialog-content>
+  <div class="col-md-12">
+    <form
+      [formGroup]="rangeCreationRulesForm"
+      (ngSubmit)="rangeCreationFormSubmit()"
+    >
+      <h3>Range Creation</h3>
+      <div class="col-md-12">
+        <div class="col-md-5 m-0">
+          <p class="font-size15">Select Field</p>
+        </div>
+        <div class="col-md-7 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Select</mat-label>
+            <mat-select
+              matNativeControl
+              formControlName="impactFieldName"
+              required
+            >
+              <mat-option value="Compa Ratio">Compa Ratio</mat-option>
+              <mat-option value="Range Penetration"
+                >Range Penetration</mat-option
+              >
+              <mat-option value="Percent Rank">Percent Rank</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                rangeCreationRulesForm.controls.impactFieldName.errors?.required
+              "
+              >Impact Field is required</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="clearfix"></div>
+      <h3 class="mb-2 mt-2">Create Slabs</h3>
+      <div class="pad-left">
+        <div formArrayName="rangerules">
+          <div *ngFor="let rule of rangerules.controls; let i = index">
+            <div [formGroupName]="i">
+              <div class="col-md-6">
+                <div class="col-md-4 m-0">
+                  <p class="font-size15">Form</p>
+                </div>
+                <div class="col-md-7 m-0">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <input matInput placeholder="" formControlName="from" />
+                    <mat-error
+                      *ngIf="
+                        rangerules.controls[i].get('from').hasError('required')
+                      "
+                      >From Slab Value is required</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="col-md-4 m-0">
+                  <p class="font-size15">to</p>
+                </div>
+                <div class="col-md-7 m-0">
+                  <mat-form-field
+                    appearance="outline"
+                    style="width: 90%; float: left;"
+                  >
+                    <input matInput placeholder="" formControlName="to" />
+                    <mat-error
+                      *ngIf="
+                        rangerules.controls[i].get('to').hasError('required')
+                      "
+                    >
+                      To Slab value is required
+                    </mat-error>
+                  </mat-form-field>
+                  <button
+                    *ngIf="i != 0"
+                    style="background-color: transparent; float: right; width: auto; border: 0px;margin-top: 17px;
+                    margin-right: -10px"
+                    (click)="removeRangeCreationRules(i)"
+                  >
+                    X
+                  </button>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <button
+          mat-button
+          style="color:#3A4666;"
+          (click)="addRangeCreationRules(null, null)"
+          type="button"
+        >
+          + Add
+        </button>
+      </div>
+      <div class="col-md-12 ">
+        <div class="col-md-4 m-0">
+          <p class="font-size15">Save as Range</p>
+        </div>
+        <div class="col-md-7 m-0">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <input matInput placeholder="" formControlName="rangeName" />
+            <mat-error
+              *ngIf="rangeCreationRulesForm.controls.rangeName.errors?.required"
+            >
+              Range Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+      <div class="col-md-6">
+        <button
+          style="float: right; display: none;"
+          mat-raised-button
+          color="primary"
+          id="saveForm"
+          #saveForm
+        >
+          Save
+        </button>
+      </div>
+    </form>
+    <div class="clearfix"></div>
+
+    <div class="clearfix"></div>
+  </div>
+</div>
+<div mat-dialog-actions style="display: block;">
+  <div class="float-right">
+    <button
+      style="float: right;"
+      mat-raised-button
+      color="primary"
+      id="edit"
+      cdkFocusInitial
+      (click)="saveBtn()"
+    >
+      Save
+    </button>
+    <button class="" style="float: right;" mat-button [mat-dialog-close]="true">
+      Cancel
+    </button>
+  </div>
+</div>

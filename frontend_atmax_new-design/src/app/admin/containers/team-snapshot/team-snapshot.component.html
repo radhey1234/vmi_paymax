@@ -1,0 +1,64 @@
+<main>
+  <div class="main-container">
+    <div class="col-4">
+      <mat-card style="min-height: 146px;">
+        <div class="image-pr">
+          <img src="assets/images/analyst.png" />
+        </div>
+        <div class="text-1">
+          <p>Per Team Member Expenses</p>
+          <h3><strong>₹</strong> 35000</h3>
+        </div>
+        <p class="text-center">
+          Top by <strong>₹</strong> 26,000 from last year
+        </p>
+        <div class="clearfix"></div>
+      </mat-card>
+    </div>
+    <div class="col-4">
+      <mat-card style="min-height: 146px;">
+        <div class="image-pr">
+          <img src="assets/images/index.png" />
+        </div>
+        <div class="text-1">
+          <p>Budget Difference</p>
+          <h3><strong>₹</strong> 25000</h3>
+        </div>
+        <p class="text-center">
+          Allocated budget of <strong>₹</strong> 50,00,000
+        </p>
+        <div class="clearfix"></div>
+      </mat-card>
+    </div>
+    <div class="col-4">
+      <mat-card style="min-height: 146px;">
+        <div class="image-pr">
+          <img src="assets/images/team-card.png" />
+        </div>
+        <div class="text-1">
+          <p>Average experience of your team</p>
+          <h3>2 years 3 months</h3>
+        </div>
+        <p class="text-center">
+          Up by <strong> 5 month</strong> form last year
+        </p>
+        <div class="clearfix"></div>
+      </mat-card>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-6">
+      <mat-card>
+        <div #container style="height: 270px;"></div>
+        <!-- <div [chart]="funnelEmployeeStatus"></div> -->
+      </mat-card>
+    </div>
+    <div class="col-6">
+      <mat-card>
+        <div
+          [chart]="performanceDistributionChart"
+          style="height: 270px;"
+        ></div>
+      </mat-card>
+    </div>
+  </div>
+</main>
