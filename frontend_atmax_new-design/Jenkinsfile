@@ -1,0 +1,154 @@
+def ENVIRONMENT_IP=''
+def ENVIRONMENT_PEM_FILE=''
+def USER='ec2-user'
+
+pipeline {
+  agent any
+
+  options {
+    timeout(time: 20, unit: 'MINUTES')
+  }
+  	
+    environment{	    
+        STAGE_IP123='65.2.107.227'
+        STAGE_PEM='/var/jenkins_home/workspace/newstagefrontend.pem'	    
+        QA_IP='65.2.162.5'	
+        QA_PEM='/var/jenkins_home/workspace/newqafrontend.pem'
+        OLD_STAGE_IP=''
+        OLD_STAGE_PEM=''
+        UAT_IP=''
+        UAT_PEM=''
+        PROD_IP123='13.126.8.162'
+	PROD_PEM='/var/jenkins_home/workspace/newprodfronted.pem'
+    }  
+  
+    parameters {
+        choice(name: 'envToDeploy', choices: ['Stage','Qa', 'OldStage', 'Uat', 'Prod'], description: 'Deployment')
+        booleanParam(name: 'dependencyInstallation', defaultValue: true, description: 'To be done only once')
+    }
+
+  stages {
+
+    stage('Build info') {
+      steps {
+        echo "BUILD_NUMBER ${BUILD_NUMBER}"
+        echo "BUILD_URL ${BUILD_URL}"
+        echo "BUILD_ID ${BUILD_ID}"
+      }
+    }
+
+stage('ENV IDENTIFIED'){
+	   steps{
+	     script{
+		     if("${envToDeploy}" == "Stage"){
+		    	ENVIRONMENT_IP= "${STAGE_IP}"
+		    	ENVIRONMENT_PEM_FILE = "${STAGE_PEM}"
+		     }
+		    
+		    if("${envToDeploy}" == "Qa"){
+		    	ENVIRONMENT_IP= "${QA_IP}"
+		    	ENVIRONMENT_PEM_FILE = "${QA_PEM}"
+		    }
+
+		    if("${envToDeploy}" == "OldStage"){
+		    	ENVIRONMENT_IP= "${OLD_STAGE_IP}"
+		    	ENVIRONMENT_PEM_FILE = "${QA_PEM}"
+		    }
+
+		    if("${envToDeploy}" == "Uat"){
+		    	ENVIRONMENT_IP= "${UAT_IP}"
+		    	ENVIRONMENT_PEM_FILE = "${UAT_PEM}"
+		    }
+
+    		    if("${envToDeploy}" == "Prod"){
+		    	ENVIRONMENT_IP= "${PROD_IP}"
+		    	ENVIRONMENT_PEM_FILE = "${PROD_PEM}"
+		    }
+
+	    echo "Deployment Env IP ${ENVIRONMENT_IP}  ${ENVIRONMENT_PEM_FILE} Pem File  "
+		   }
+	   }
+	}
+    stage('Dependency Installation') {
+      when {
+            expression {
+                params.dependencyInstallation
+            }
+        }
+
+      steps {
+        echo "Starting Dependency Installation Process"
+        sh 'pwd'
+        sh 'npm -version'
+        sh 'npm install'
+        sh 'rm -rf package-lock.json'
+        sh 'npm  install'
+        sh 'npm install express-serve-static-core'
+        sh 'npm install'
+      }
+    } //stage
+
+/**    
+    stage('Running Sonar') {
+      steps {
+        echo "Running Sonar Build"
+        sh 'pwd'
+        sh 'sonar-scanner \
+              -Dsonar.projectKey=Incentmax \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=http://13.235.48.9:9000 \
+              -Dsonar.login=509fe05238cf06ba520cb54017c76c8d79c1afc7'        
+      }
+    } //stage
+**/
+    
+    stage('building') {
+      steps {
+        script {
+          echo "Starting Copy to : ${envToDeploy}"
+
+          if ("${envToDeploy}" == "OldStage") {
+            sh 'npm run build-oldstage'
+          }
+
+          if ("${envToDeploy}" == "Stage") {
+            sh 'npm run build-stage'
+          }
+
+          if ("${envToDeploy}" == "Qa") {
+            sh 'npm run build-qa'
+          }
+
+          if ("${envToDeploy}" == "Uat") {
+            sh 'npm run build-uat'
+          }
+
+          if ("${envToDeploy}" == "Prod") {
+            sh 'npm run build-prod'
+          }
+        }
+
+      }
+    } // stage
+
+    stage('Deploying') {
+      steps {
+        script {
+           echo "Stopping server to : ${envToDeploy}"
+           sh "scp -o StrictHostKeyChecking=no -i $ENVIRONMENT_PEM_FILE  -r dist/atmax/** $USER@$ENVIRONMENT_IP:/home/ec2-user/paymax/"        
+         }
+      }
+    } 
+
+    stage('Start Server') {
+      steps {
+        script {
+          echo "Starting server to : ${envToDeploy}"
+          sh "ssh -o StrictHostKeyChecking=no  -i  $ENVIRONMENT_PEM_FILE -T $USER@$ENVIRONMENT_IP sudo /home/ec2-user/copypaymax.sh"
+          
+        } 
+      } 
+    } //start server
+
+  } // stages
+} //pipeline
